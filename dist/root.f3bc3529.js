@@ -66741,7 +66741,8 @@ class Map extends _react.Component {
       style: 'mapbox://styles/mapbox/light-v9',
       center: [37.617635, 55.755814],
       minZoom: 9,
-      maxBounds: bounds
+      maxBounds: bounds //doubleClickZoom: false,
+
     });
     this.translate(map);
     this.map = map;
@@ -66797,10 +66798,6 @@ class Map extends _react.Component {
           });
           this.map.on('click', 'locations', e => {
             const currentFeature = e.features[0];
-            this.map.flyTo({
-              center: currentFeature.geometry.coordinates,
-              zoom: 15
-            });
             this.props.selectedPoint(currentFeature);
           });
           this.map.on('mouseover', 'locations', e => {
@@ -66831,16 +66828,16 @@ class Map extends _react.Component {
               }
             }, 'waterway-label');
           });
-          this.map.on('click', 'cafeRating', e => {
-            const coordinates = e.features[0].geometry.coordinates[0];
-            const bounds = coordinates.reduce(function (bounds, coord) {
-              return bounds.extend(coord);
-            }, new _mapboxGl.default.LngLatBounds(coordinates[0], coordinates[0]));
-            this.map.flyTo({
-              center: bounds.getCenter(),
-              zoom: 13
-            });
-          });
+          /*this.map.on('click', 'cafeRating', (e) => {
+              const coordinates = e.features[0].geometry.coordinates[0]
+              const bounds = coordinates.reduce(function (bounds, coord) {
+                  return bounds.extend(coord);
+              }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
+              this.map.flyTo({
+                  center: bounds.getCenter(),
+                  zoom: 13
+              });
+          });*/
         }
 
         this.map.on('moveend', () => {
@@ -66858,15 +66855,6 @@ class Map extends _react.Component {
         this.map.setFilter('locations', filter);
         this.map.setFilter('locations-text', filter);
       }
-    }
-
-    if (this.props.activeItem) {
-      this.map.flyTo({
-        center: this.props.activeItem.geometry.coordinates,
-        speed: 3,
-        zoom: 15
-      });
-      this.props.clearActiveItem();
     }
   } //Change language of label layers
 
@@ -88924,9 +88912,7 @@ class List extends _react.Component {
     });
 
     _defineProperty(this, "handleClick", number => {
-      this.props.activeItem(number);
-      this.props.currentItem(number); //this.setState({clicked: true, activeItem: number});
-      //this.onSearchTextChange(number.properties.title)
+      this.props.currentItem(number);
     });
   }
 
@@ -89001,11 +88987,6 @@ class List extends _react.Component {
     this.props.onFilteredItemsChange(linesOfList);
   }
 
-  /*
-      handleClose = () => {
-          this.setState({clicked: false});
-          this.onSearchTextChange("")
-      }*/
   render() {
     const {
       linesOfList,
@@ -89289,7 +89270,6 @@ class MapContainer extends _react.Component {
     _defineProperty(this, "state", {
       points: null,
       conturs: null,
-      activeItem: null,
       currentItem: null,
       highlightedItemId: null,
       filteredItemsList: [],
@@ -89304,21 +89284,9 @@ class MapContainer extends _react.Component {
       });
     });
 
-    _defineProperty(this, "activeItemHandler", value => {
-      this.setState({
-        activeItem: value
-      });
-    });
-
     _defineProperty(this, "currentItemHandler", value => {
       this.setState({
         currentItem: value
-      });
-    });
-
-    _defineProperty(this, "clearActiveItemHandler", () => {
-      this.setState({
-        activeItem: null
       });
     });
 
@@ -89378,8 +89346,6 @@ class MapContainer extends _react.Component {
       closeCard: () => this.handleClose()
     }) : null, this.state.zoomValue < 8 ? _react.default.createElement(_BarCharts.default, null) : null, _react.default.createElement(_List.default, {
       rawPoints: this.state.points,
-      activeItem: this.activeItemHandler // to fly on map, it will be null after flight
-      ,
       currentItem: this.currentItemHandler // to open card
       ,
       onFilteredItemsChange: this.filteredItemsHandler,
@@ -89389,9 +89355,7 @@ class MapContainer extends _react.Component {
     }), _react.default.createElement(_Map.default, {
       pointsData: this.state.points,
       contursData: this.state.conturs,
-      activeItem: this.state.activeItem,
       selectedPoint: this.selectedPointHandler,
-      clearActiveItem: this.clearActiveItemHandler,
       filteredItemsList: this.state.filteredItems,
       zoomValue: this.zoomValueHandler,
       updateBounds: this.onBoundsUpdate,
@@ -89536,7 +89500,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40748" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41137" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

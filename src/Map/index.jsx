@@ -18,7 +18,6 @@ class MapContainer extends Component {
     state = {
         points: null,
         conturs: null,
-        activeItem: null,
         currentItem: null,
         highlightedItemId: null,
         filteredItemsList: [],
@@ -56,16 +55,8 @@ class MapContainer extends Component {
         this.setState({currentItem: value})
     };
 
-    activeItemHandler = (value) => {
-        this.setState({activeItem: value})
-    };
-
     currentItemHandler = (value) => {
         this.setState({currentItem: value})
-    };
-
-    clearActiveItemHandler = () =>{
-        this.setState({activeItem: null})
     };
 
     filteredItemsHandler = (list) => {
@@ -103,7 +94,6 @@ class MapContainer extends Component {
                     /> : null}
 
                 <List rawPoints={this.state.points}
-                      activeItem={this.activeItemHandler} // to fly on map, it will be null after flight
                       currentItem={this.currentItemHandler} // to open card
                       onFilteredItemsChange={this.filteredItemsHandler}
                       filteredItemsList={this.state.filteredItems}
@@ -113,9 +103,7 @@ class MapContainer extends Component {
 
                 <Map pointsData={this.state.points}
                      contursData={this.state.conturs}
-                     activeItem={this.state.activeItem}
                      selectedPoint={this.selectedPointHandler}
-                     clearActiveItem={this.clearActiveItemHandler}
                      filteredItemsList={this.state.filteredItems}
                      zoomValue={this.zoomValueHandler}
                      updateBounds={this.onBoundsUpdate}
@@ -194,7 +182,5 @@ function addValues(data ,rating) {
 
     })
 }
-
-
 
 export default MapContainer;

@@ -16,6 +16,7 @@ class Map extends Component {
             center: [37.617635, 55.755814],
             minZoom: 9,
             maxBounds: bounds,
+            //doubleClickZoom: false,
         });
 
         this.translate(map);
@@ -81,10 +82,6 @@ class Map extends Component {
 
                 this.map.on('click', 'locations', (e) => {
                     const currentFeature = e.features[0];
-                    this.map.flyTo({
-                        center: currentFeature.geometry.coordinates,
-                        zoom: 15
-                    });
                     this.props.selectedPoint(currentFeature)
                 });
 
@@ -117,7 +114,7 @@ class Map extends Component {
                         }
                     }, 'waterway-label');
                 });
-                this.map.on('click', 'cafeRating', (e) => {
+                /*this.map.on('click', 'cafeRating', (e) => {
                     const coordinates = e.features[0].geometry.coordinates[0]
                     const bounds = coordinates.reduce(function (bounds, coord) {
                         return bounds.extend(coord);
@@ -126,7 +123,7 @@ class Map extends Component {
                         center: bounds.getCenter(),
                         zoom: 13
                     });
-                });
+                });*/
             }
 
             this.map.on('moveend', () => {
@@ -145,16 +142,6 @@ class Map extends Component {
                 this.map.setFilter('locations', filter);
                 this.map.setFilter('locations-text', filter);
             }
-        }
-
-        if (this.props.activeItem) {
-            this.map.flyTo({
-                center: this.props.activeItem.geometry.coordinates,
-                speed: 3,
-                zoom: 15
-            });
-
-            this.props.clearActiveItem()
         }
     }
 

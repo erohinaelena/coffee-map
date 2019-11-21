@@ -107,16 +107,9 @@ class List extends Component {
     };
 
     handleClick = (number) => {
-        this.props.activeItem(number)
         this.props.currentItem(number)
-        //this.setState({clicked: true, activeItem: number});
-        //this.onSearchTextChange(number.properties.title)
     };
-/*
-    handleClose = () => {
-        this.setState({clicked: false});
-        this.onSearchTextChange("")
-    }*/
+
 
     render() {
         const {
