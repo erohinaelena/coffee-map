@@ -88920,10 +88920,10 @@ class List extends _react.Component {
 
     /*let c = document.getElementById("myCanvas");
     let ctx = c.getContext("2d");
-      let grd = ctx.createLinearGradient(0, 0, 200, 0);
+     let grd = ctx.createLinearGradient(0, 0, 200, 0);
     grd.addColorStop(0, "red");
     grd.addColorStop(1, "white");
-      ctx.fillStyle = grd;
+     ctx.fillStyle = grd;
     ctx.fillRect(10, 10, 150, 80);*/
   }
 
@@ -89265,17 +89265,18 @@ class ConnectingLineLayer extends _react.Component {
       mapBounds
     } = this.props;
 
-    if (highlightedItemId === null) {
-      this.setState({
-        x1: 0,
-        y1: 0,
-        x2: 0,
-        y2: 0
-      });
+    if (!highlightedItemId) {
+      this.clearLine();
       return;
     }
 
     const pointData = filteredItemsList.find(item => item.properties.id === highlightedItemId);
+
+    if (!pointData || !pointData.geometry || !pointData.geometry.coordinates) {
+      this.clearLine();
+      return;
+    }
+
     const coordinates = pointData.geometry.coordinates;
     const [pointLng, pointLat] = coordinates;
     const sw = mapBounds.getSouthWest();
@@ -89293,6 +89294,15 @@ class ConnectingLineLayer extends _react.Component {
       x2: listItemBBox.x + listItemBBox.width - 5,
       y2: listItemBBox.y + listItemBBox.height / 2,
       color: pointData.properties.color
+    });
+  }
+
+  clearLine() {
+    this.setState({
+      x1: 0,
+      y1: 0,
+      x2: 0,
+      y2: 0
     });
   }
 
@@ -89373,7 +89383,7 @@ class MapContainer extends _react.Component {
       conturs: null,
       currentItem: null,
       highlightedItemId: null,
-      filteredItemsList: [],
+      filteredItems: [],
       rawData: [],
       zoomValue: 9,
       mapBounds: null
@@ -89434,7 +89444,7 @@ class MapContainer extends _react.Component {
           rawData: data,
           points: geoJSON,
           conturs: geoMoscow,
-          filteredItemsList: geoJSON.data.features
+          filteredItems: geoJSON.data.features
         });
       });
     });
@@ -89601,7 +89611,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52294" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63877" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

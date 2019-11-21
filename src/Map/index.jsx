@@ -20,7 +20,7 @@ class MapContainer extends Component {
         conturs: null,
         currentItem: null,
         highlightedItemId: null,
-        filteredItemsList: [],
+        filteredItems: [],
         rawData:[],
         zoomValue: 9,
         mapBounds: null
@@ -44,7 +44,7 @@ class MapContainer extends Component {
                     rawData: data,
                     points: geoJSON,
                     conturs: geoMoscow,
-                    filteredItemsList: geoJSON.data.features
+                    filteredItems: geoJSON.data.features
                 })
             })
 
