@@ -82,6 +82,7 @@ class Map extends Component {
 
                 this.map.on('click', 'locations', (e) => {
                     const currentFeature = e.features[0];
+                    debugger
                     this.props.selectedPoint(currentFeature)
                 });
 

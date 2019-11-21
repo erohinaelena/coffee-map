@@ -27,9 +27,10 @@ class CafeCard extends Component {
 
         const fullInfo = this.state.info,
             info = this.props.target.properties
-
+debugger
         const week=['Пн','Вт','Ср','Чт','Пт','Сб','Вс']
-        const shedule = info.workTime.map((a,i)=>{return {day:i, time: a[0]}}).filter(el => el.time!=undefined)
+        const workTime = Array.isArray(info.workTime) ? info.workTime : JSON.parse(info.workTime)
+        const shedule = workTime.map((a,i)=>{return {day:i, time: a[0]}}).filter(el => el.time!=undefined)
         const shorts =  nest()
             .key(d=>d.time)
             .rollup(els => {
@@ -59,7 +60,7 @@ class CafeCard extends Component {
 
 
         return ReactDOM.createPortal(
-            <div className="cafeCard cafeCard-absolute">
+            <div className="cafeCard cafeCard-absolute" style={{'background':info.color}}>
                 <div className='cafeCard--header'>{info.title}</div>
                 <div className='cafeCard--closeBtn' onClick = {this.handleClose}><img src={closeBtn} width="19" height="18" /></div>
 
@@ -93,33 +94,3 @@ class CafeCard extends Component {
 }
 
 export default CafeCard;
-
-function ramp(color, numscale, n = 512) {
-    const canvas = DOM.canvas(n, 1);
-    const context = canvas.getContext("2d"),
-        w = width + 28;
-    canvas.style.margin = "0 -14px";
-    canvas.style.width = `${w}px`;
-    canvas.style.height = "40px";
-    canvas.style.imageRendering = "pixelated";
-
-    // companion numerical scale, to define the axis.
-    if (numscale === undefined) numscale = d3.scaleLinear();
-    if (color.domain) numscale.domain(color.domain());
-    numscale.range([0, n]);
-    const t = color.ticks ? color.ticks(n) : d3.range(n).map(i => i / (n - 1));
-
-    for (let i = 0; i < t.length; ++i) {
-        context.fillStyle = color(t[i]);
-        context.fillRect((i * n) / t.length, 0, 100, 1);
-    }
-
-    d3.select(canvas).on("mousemove click", function() {
-        const t = numscale.invert((d3.mouse(this)[0] / w) * n);
-        canvas.value = t;
-        canvas.dispatchEvent(new CustomEvent("input"));
-    });
-    canvas.value = 0;
-
-    return canvas;
-}

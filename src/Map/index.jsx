@@ -52,6 +52,7 @@ class MapContainer extends Component {
     }
 
     selectedPointHandler = (value) => {
+        debugger
         this.setState({currentItem: value})
     };
 
