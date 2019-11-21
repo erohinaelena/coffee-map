@@ -66769,10 +66769,14 @@ class Map extends _react.Component {
               'paint': {
                 'circle-radius': {
                   'base': 3,
-                  'stops': [[12, 3], [14, 6]]
+                  'stops': [[10, 2], [14, 10]]
                 },
                 'circle-color': ['get', 'color'],
-                'circle-opacity': 1,
+                //'circle-opacity': 1,
+                'circle-opacity': {
+                  'base': 3,
+                  'stops': [[10, 0.8], [12, 1]]
+                },
                 'circle-stroke-width': 0,
                 'circle-stroke-color': '#00bf7c',
                 'circle-stroke-opacity': 1
@@ -66797,35 +66801,39 @@ class Map extends _react.Component {
               }
             });
             this.map.addLayer({
-              "id": "heatmap2",
+              "id": "heatmap3",
               "type": "heatmap",
               "source": geojsonPoints,
               "paint": {
-                "heatmap-weight": ["interpolate", ["linear"], ["get", "rating"], 0, 0, 1, 1, 5, 0],
-                "heatmap-intensity": ["interpolate", ["linear"], ["zoom"], 0, 1, 14, 5],
-                "heatmap-color": ["interpolate", ["linear"], ["heatmap-density"], 0.2, 'rgba(0,0,0,0)', 2, (0, _.getColorMagma)(3)],
-                "heatmap-radius": ["interpolate", ["linear"], ["get", "rating"], 0, 0, 1, 50, 3, 20, 5, 0],
-                "heatmap-opacity": ["interpolate", ["linear"], ["zoom"], 7, 2, 14, 0.5]
+                "heatmap-weight": ["interpolate", ["exponential", 10000], ["get", "rating"], 0, 0, 1, 0, 2, 1, 4, 0, 5, 0],
+                "heatmap-intensity": ["interpolate", ["linear"], ["zoom"], 0, 1],
+                "heatmap-color": ["interpolate", ["linear"], ["heatmap-density"], 0, 'rgba(0,0,0,0)', 1, (0, _.getColorMagma)(3)],
+                "heatmap-radius": ["interpolate", ["linear"], ["get", "rating"], 1, 50],
+                "heatmap-opacity": ["interpolate", ["linear"], ["zoom"], 10, 0.4, 14, 0]
               }
             }, 'waterway-label');
             this.map.addLayer({
-              "id": "heatmap",
+              "id": "heatmap4",
               "type": "heatmap",
               "source": geojsonPoints,
               "paint": {
-                // Increase the heatmap weight based on frequency and property magnitude
-                "heatmap-weight": ["interpolate", ["linear"], ["get", "rating"], 0, 0, 8, 1],
-                // Increase the heatmap color weight weight by zoom level
-                // heatmap-intensity is a multiplier on top of heatmap-weight
-                "heatmap-intensity": ["interpolate", ["linear"], ["zoom"], 0, 1, 14, 14],
-                // Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
-                // Begin color ramp at 0-stop with a 0-transparancy color
-                // to create a blur-like effect.
-                "heatmap-color": ["interpolate", ["linear"], ["heatmap-density"], 0.2, 'rgba(0,0,0,0)', 3, (0, _.getColorMagma)(5)],
-                // Adjust the heatmap radius by zoom level
-                "heatmap-radius": ["interpolate", ["linear"], ["get", "rating"], 0, 0, 1, 0, 5, 30],
-                // Transition from heatmap to circle layer by zoom level
-                "heatmap-opacity": ["interpolate", ["linear"], ["zoom"], 7, 1, 14, 0.5]
+                "heatmap-weight": ["interpolate", ["exponential", 10000], ["get", "rating"], 1, 0, 2, 0, 4, 1, 5, 0],
+                "heatmap-intensity": ["interpolate", ["linear"], ["zoom"], 0, 1],
+                "heatmap-color": ["interpolate", ["linear"], ["heatmap-density"], 0, 'rgba(0,0,0,0)', 1, (0, _.getColorMagma)(4)],
+                "heatmap-radius": ["interpolate", ["linear"], ["get", "rating"], 1, 40],
+                "heatmap-opacity": ["interpolate", ["linear"], ["zoom"], 10, 0.4, 14, 0]
+              }
+            }, 'waterway-label');
+            this.map.addLayer({
+              "id": "heatmap5",
+              "type": "heatmap",
+              "source": geojsonPoints,
+              "paint": {
+                "heatmap-weight": ["interpolate", ["exponential", 10000], ["get", "rating"], 0, 0, 2, 0, 4, 0, 5, 1],
+                "heatmap-intensity": ["interpolate", ["linear"], ["zoom"], 0, 1],
+                "heatmap-color": ["interpolate", ["linear"], ["heatmap-density"], 0, 'rgba(0,0,0,0)', 1, (0, _.getColorMagma)(5)],
+                "heatmap-radius": ["interpolate", ["linear"], ["get", "rating"], 1, 30],
+                "heatmap-opacity": ["interpolate", ["linear"], ["zoom"], 10, 0.4, 14, 0]
               }
             }, 'waterway-label'); //                     this.map.addLayer({
             //                         "id": "heatmap",
@@ -89636,7 +89644,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63877" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58524" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
