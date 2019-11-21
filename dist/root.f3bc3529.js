@@ -88916,6 +88916,17 @@ class List extends _react.Component {
     });
   }
 
+  componentDidMount() {//TODO:LEGEND
+
+    /*let c = document.getElementById("myCanvas");
+    let ctx = c.getContext("2d");
+      let grd = ctx.createLinearGradient(0, 0, 200, 0);
+    grd.addColorStop(0, "red");
+    grd.addColorStop(1, "white");
+      ctx.fillStyle = grd;
+    ctx.fillRect(10, 10, 150, 80);*/
+  }
+
   componentDidUpdate(prevProps) {
     if (!_lodash.default.isEqual(this.props.mapBounds, prevProps.mapBounds) || !prevProps.rawPoints && this.props.rawPoints) {
       this.updateLinesOfList();
@@ -89055,6 +89066,12 @@ var _reactDom = _interopRequireDefault(require("react-dom"));
 
 var _close = _interopRequireDefault(require("./img/close.svg"));
 
+var _lodash = _interopRequireWildcard(require("lodash"));
+
+var _d3Collection = require("d3-collection");
+
+var _d3Array = require("d3-array");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
@@ -89072,7 +89089,12 @@ class CafeCard extends _react.Component {
     });
 
     _defineProperty(this, "componentDidUpdate", (prevProps, prevState, snapshot) => {
-      this.info = this.props.all.find(el => el['Id карточки'] === this.props.target.properties.rawId);
+      if (!(0, _lodash.isEqual)(this.props.target, prevProps.target)) {
+        const full = this.props.all.find(el => el['Id карточки'] === this.props.target.properties.rawId);
+        this.setState({
+          info: full
+        });
+      }
     });
 
     const fullInformation = this.props.all.find(el => el['Id карточки'] === this.props.target.properties.rawId);
@@ -89084,11 +89106,37 @@ class CafeCard extends _react.Component {
   render() {
     const fullInfo = this.state.info,
           info = this.props.target.properties;
+    const week = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+    const shedule = info.workTime.map((a, i) => {
+      return {
+        day: i,
+        time: a[0]
+      };
+    }).filter(el => el.time != undefined);
+    const shorts = (0, _d3Collection.nest)().key(d => d.time).rollup(els => {
+      if (els.length > 1) return week[els[0].day] + "-" + week[els[els.length - 1].day]; //Пн-чт —
+      else return week[els[0].day];
+    }).entries(shedule);
+    const short = shorts.map(el => {
+      const keys = el.key.split(','),
+            start = keys[0] || '',
+            end = keys[1] || '',
+            hours = start.split(':'),
+            startH = hours[0] || '',
+            startM = hours[1] || '',
+            hours2 = end.split(":"),
+            endH = hours2[0] || '',
+            endM = hours2[1] || '';
+      return {
+        key: '<span>' + startH + '<sup>' + startM + '</sup> — ' + endH + '<sup>' + endM + '</sup></span>',
+        value: el.value
+      };
+    });
     return _reactDom.default.createPortal(_react.default.createElement("div", {
       className: "cafeCard cafeCard-absolute"
     }, _react.default.createElement("div", {
       className: "cafeCard--header"
-    }, fullInfo['Наименование организации']), _react.default.createElement("div", {
+    }, info.title), _react.default.createElement("div", {
       className: "cafeCard--closeBtn",
       onClick: this.handleClose
     }, _react.default.createElement("img", {
@@ -89101,14 +89149,52 @@ class CafeCard extends _react.Component {
       className: "cafeCard--rating"
     }, info.rating) : null, _react.default.createElement("div", {
       className: "cafeCard--address"
-    }, info.description)), _react.default.createElement("div", null, info['FlampRating'])), document.getElementById('cafeCard'));
+    }, info.description)), _react.default.createElement("div", {
+      className: "cafeCard--content--shedule"
+    }, short.map((el, i) => _react.default.createElement("div", {
+      key: i,
+      className: "cafeCard--content--shedule--row"
+    }, _react.default.createElement("div", null, el.value), _react.default.createElement("div", {
+      dangerouslySetInnerHTML: {
+        __html: el.key
+      }
+    })))), _react.default.createElement("div", null, fullInfo['Способ оплаты'] == 'Наличный расчёт' ? 'Оплата только наличными' : null), _react.default.createElement("div", null, fullInfo['Телефоны'] != "#ERROR!" ? fullInfo['Телефоны'] : null), _react.default.createElement("div", null, info['FlampRating'])), document.getElementById('cafeCard'));
   }
 
 }
 
 var _default = CafeCard;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","./img/close.svg":"img/close.svg"}],"BarCharts.jsx":[function(require,module,exports) {
+
+function ramp(color, numscale) {
+  let n = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 512;
+  const canvas = DOM.canvas(n, 1);
+  const context = canvas.getContext("2d"),
+        w = width + 28;
+  canvas.style.margin = "0 -14px";
+  canvas.style.width = "".concat(w, "px");
+  canvas.style.height = "40px";
+  canvas.style.imageRendering = "pixelated"; // companion numerical scale, to define the axis.
+
+  if (numscale === undefined) numscale = d3.scaleLinear();
+  if (color.domain) numscale.domain(color.domain());
+  numscale.range([0, n]);
+  const t = color.ticks ? color.ticks(n) : d3.range(n).map(i => i / (n - 1));
+
+  for (let i = 0; i < t.length; ++i) {
+    context.fillStyle = color(t[i]);
+    context.fillRect(i * n / t.length, 0, 100, 1);
+  }
+
+  d3.select(canvas).on("mousemove click", function () {
+    const t = numscale.invert(d3.mouse(this)[0] / w * n);
+    canvas.value = t;
+    canvas.dispatchEvent(new CustomEvent("input"));
+  });
+  canvas.value = 0;
+  return canvas;
+}
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","./img/close.svg":"img/close.svg","lodash":"../node_modules/lodash/lodash.js","d3-collection":"../node_modules/d3-collection/src/index.js","d3-array":"../node_modules/d3-array/src/index.js"}],"BarCharts.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -89515,7 +89601,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41137" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52294" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

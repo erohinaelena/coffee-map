@@ -36,7 +36,7 @@ body {
 
 
 .left-column {
-    padding: 29px 17px;
+    padding: 29px 0 0 17px;
     font-size: 16px;
     display: flex;
     flex-direction: column;
@@ -44,7 +44,7 @@ body {
     background: #020108;
     box-shadow: 0px 0px 16px rgba(67, 29, 11, 0.19);
     color:white;
-    width: 322px;
+    width: 337px;
 
     img.logo{
         margin-bottom: 23px;
@@ -137,6 +137,23 @@ body {
             overflow:hidden;
             text-overflow: ellipsis;
         }
+
+        &--shedule{
+            flex-direction: column;
+            margin-top: 16px;
+            margin-bottom:8px;
+            &--row{
+                flex-direction: row;
+                display: flex;
+                align-items: baseline;
+                :first-child{
+                    flex:1;
+                }
+                :last-child{
+                    flex:5;
+                }
+            }
+        }
     }
 }
 
@@ -190,7 +207,10 @@ body {
         cursor: pointer;
 
         &.__checked {
-            background: rgba(0, 0, 0, 0.5)
+            background: rgba(255, 255, 255, 0.4)
+        }
+        &:hover{
+            background: rgba(255, 255, 255, 0.3)
         }
     }
 
