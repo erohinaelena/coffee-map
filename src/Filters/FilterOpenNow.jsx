@@ -4,6 +4,8 @@ import classNames from 'classnames';
 const FilterOpenNow = ({isChecked, onToggle}) => (
 	<div
 		className={classNames(
+			'filter',
+			'filter-rounded',
 			'filterOpenNow',
 			{'__checked': isChecked}
 		)}

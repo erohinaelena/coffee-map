@@ -4,6 +4,8 @@ import classNames from 'classnames';
 const FilterEcoFriendly = ({isChecked, onToggle}) => (
 	<div
 		className={classNames(
+			'filter',
+			'filter-rounded',
 			'filterEcoFriendly',
 			{'__checked': isChecked}
 		)}

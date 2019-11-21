@@ -298,6 +298,8 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
   right: 120%;
 }
 
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,800&display=swap&subset=cyrillic,cyrillic-ext");
 #map {
   width: 100%;
   height: 100%;
@@ -306,7 +308,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 body {
   margin: 0;
   padding: 0;
-  font-family: Arial;
+  font-family: "Open Sans", Arial, sans-serif;
 }
 
 ::-webkit-scrollbar {
@@ -334,7 +336,7 @@ body {
 }
 
 .left-column {
-  padding: 0.5rem;
+  padding: 29px 17px;
   font-size: 16px;
   display: flex;
   flex-direction: column;
@@ -342,7 +344,10 @@ body {
   background: #020108;
   box-shadow: 0px 0px 16px rgba(67, 29, 11, 0.19);
   color: white;
-  width: 354px;
+  width: 322px;
+}
+.left-column img.logo {
+  margin-bottom: 23px;
 }
 
 .right-column {
@@ -376,6 +381,9 @@ body {
 }
 
 .cafeCard {
+  padding: 22px 17px 7px;
+}
+.cafeCard-absolute {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -384,23 +392,37 @@ body {
   box-shadow: 0px -4px 16px rgba(206, 85, 106, 0.4);
   color: black;
   min-height: 100px;
-  padding: 22px 17px 7px;
 }
-.cafeCard .closeBtn {
-  float: right;
-  color: coral;
+.cafeCard-absolute .cafeCard--address {
+  white-space: normal !important;
 }
 .cafeCard .cafeCard--header {
   font-weight: 800;
   font-size: 20px;
   line-height: 110%;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 .cafeCard .cafeCard--closeBtn {
   position: absolute;
   right: 16px;
   top: 16px;
   cursor: pointer;
+}
+.cafeCard .cafeCard--content {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  font-size: 16px;
+}
+.cafeCard .cafeCard--content .cafeCard--rating:after {
+  content: "★ · ";
+  word-spacing: 3px;
+  white-space: pre;
+}
+.cafeCard .cafeCard--content .cafeCard--address {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #cafeList {
@@ -414,16 +436,6 @@ body {
   flex-grow: 1;
   position: relative;
 }
-.sidebar input {
-  background: rgba(196, 196, 196, 0.2);
-  border-radius: 4px;
-  border: none;
-  color: #D0CDC6;
-  font-size: 16px;
-  font-style: italic;
-  padding: 4px 12px;
-  width: 294px;
-}
 .sidebar ul.scrollable {
   position: absolute;
   top: 64px;
@@ -436,25 +448,37 @@ body {
 }
 
 .filters {
-  padding-top: 14px;
   padding-bottom: 32px;
+}
+.filters .filter {
+  background: rgba(196, 196, 196, 0.2);
+  border-radius: 4px;
+  border: none;
+  color: #D0CDC6;
+  font-size: 16px;
+  font-style: italic;
+  padding: 4px 12px;
+  width: 294px;
+}
+.filters .filter-rounded {
+  border-radius: 999px;
+  font-style: normal;
 }
 .filters .filterOpenNow,
 .filters .filterEcoFriendly {
-  background: rgba(196, 196, 196, 0.2);
-  border-radius: 999px;
-  color: #D0CDC6;
   padding: 2px 12px 4px;
   display: inline;
-  font-size: 12px;
   cursor: pointer;
 }
 .filters .filterOpenNow.__checked,
 .filters .filterEcoFriendly.__checked {
   background: rgba(0, 0, 0, 0.5);
 }
-.filters .filterOpenNow {
+.filters .filterEcoFriendly {
   margin-left: 5px;
+}
+.filters .searchbar {
+  margin-bottom: 12px;
 }
 .filters .filterAverageCheck__slider {
   position: relative;
@@ -507,7 +531,7 @@ body {
   flex-direction: column;
 }
 .scrollable .listItem {
-  padding: 10px;
+  padding: 13px 3px 11px;
 }
 
 .connectingLineLayerSvg {

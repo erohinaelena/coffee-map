@@ -66897,7 +66897,7 @@ const Search = (_ref) => {
     className: "searchbar"
   }, _react.default.createElement("input", {
     type: "text",
-    className: "form-control",
+    className: "filter",
     placeholder: "\u041D\u0430\u0439\u0442\u0438 \u043F\u043E \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u044E \u0438\u043B\u0438 \u0430\u0434\u0440\u0435\u0441\u0443",
     onChange: onSearchTextChange
   }));
@@ -66980,7 +66980,7 @@ const FilterEcoFriendly = (_ref) => {
     onToggle
   } = _ref;
   return _react.default.createElement("div", {
-    className: (0, _classnames.default)('filterEcoFriendly', {
+    className: (0, _classnames.default)('filter', 'filter-rounded', 'filterEcoFriendly', {
       '__checked': isChecked
     }),
     onClick: onToggle
@@ -67009,7 +67009,7 @@ const FilterOpenNow = (_ref) => {
     onToggle
   } = _ref;
   return _react.default.createElement("div", {
-    className: (0, _classnames.default)('filterOpenNow', {
+    className: (0, _classnames.default)('filter', 'filter-rounded', 'filterOpenNow', {
       '__checked': isChecked
     }),
     onClick: onToggle
@@ -88998,29 +88998,37 @@ class List extends _react.Component {
       className: 'sidebar'
     }, this.state.clicked ? '1' : _react.default.createElement("div", {
       className: 'sidebar'
+    }, _react.default.createElement("div", {
+      className: 'filters'
     }, _react.default.createElement(_Search.default, {
       onSearchTextChange: this.onSearchTextChange
-    }), _react.default.createElement("div", {
-      className: 'filters'
-    }, _react.default.createElement(_FilterEcoFriendly.default, {
-      isChecked: isEcoChecked,
-      onToggle: this.onEcoFilterToggle
     }), _react.default.createElement(_FilterOpenNow.default, {
       isChecked: isOpenNowChecked,
       onToggle: this.onOpenNowFilterToggle
+    }), _react.default.createElement(_FilterEcoFriendly.default, {
+      isChecked: isEcoChecked,
+      onToggle: this.onEcoFilterToggle
     })), _react.default.createElement("ul", {
       className: 'scrollable'
     }, linesOfList.map((number, i) => _react.default.createElement("li", {
       style: {
         color: number.properties.color
       },
-      className: 'listItem',
+      className: 'listItem cafeCard',
       key: i,
       id: "cafeListItem_".concat(number.properties.id),
       onClick: () => this.handleClick(number),
       onMouseOver: () => this.props.onHighlightedCafeChange(number.properties.id),
       onMouseLeave: () => this.props.onHighlightedCafeChange(null)
-    }, number.properties.title))))), document.getElementById('cafeList'));
+    }, _react.default.createElement("div", {
+      className: "cafeCard--header"
+    }, number.properties.title), _react.default.createElement("div", {
+      className: "cafeCard--content"
+    }, number.properties.rating ? _react.default.createElement("div", {
+      className: "cafeCard--rating"
+    }, number.properties.rating) : null, _react.default.createElement("div", {
+      className: "cafeCard--address"
+    }, number.properties.description))))))), document.getElementById('cafeList'));
   }
 
 }
@@ -89074,19 +89082,26 @@ class CafeCard extends _react.Component {
   }
 
   render() {
-    const info = this.state.info;
+    const fullInfo = this.state.info,
+          info = this.props.target.properties;
     return _reactDom.default.createPortal(_react.default.createElement("div", {
-      className: "cafeCard"
+      className: "cafeCard cafeCard-absolute"
     }, _react.default.createElement("div", {
       className: "cafeCard--header"
-    }, this.props.target.properties.title), _react.default.createElement("div", {
+    }, fullInfo['Наименование организации']), _react.default.createElement("div", {
       className: "cafeCard--closeBtn",
       onClick: this.handleClose
     }, _react.default.createElement("img", {
       src: _close.default,
       width: "19",
       height: "18"
-    })), this.props.target.properties.description, _react.default.createElement("div", null, info['FlampRating'])), document.getElementById('cafeCard'));
+    })), _react.default.createElement("div", {
+      className: "cafeCard--content"
+    }, info.rating ? _react.default.createElement("div", {
+      className: "cafeCard--rating"
+    }, info.rating) : null, _react.default.createElement("div", {
+      className: "cafeCard--address"
+    }, info.description)), _react.default.createElement("div", null, info['FlampRating'])), document.getElementById('cafeCard'));
   }
 
 }

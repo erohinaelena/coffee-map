@@ -18,14 +18,22 @@ class CafeCard extends Component {
     }
 
     render() {
-        const info = this.state.info
+        const fullInfo = this.state.info,
+            info = this.props.target.properties
         return ReactDOM.createPortal(
-            <div className="cafeCard">
-                <div className='cafeCard--header'>{this.props.target.properties.title}</div>
+            <div className="cafeCard cafeCard-absolute">
+                <div className='cafeCard--header'>{fullInfo['Наименование организации']}</div>
                 <div className='cafeCard--closeBtn' onClick = {this.handleClose}><img src={closeBtn} width="19" height="18" /></div>
 
-
-                {this.props.target.properties.description}
+                <div className='cafeCard--content'>
+                    {info.rating ?
+                        <div className='cafeCard--rating'>
+                            {info.rating}
+                        </div> :null}
+                    <div className='cafeCard--address'>
+                        {info.description}
+                    </div>
+                </div>
                 <div>{info['FlampRating']}</div>
             </div>,
         document.getElementById('cafeCard'));

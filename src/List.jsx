@@ -124,16 +124,19 @@ class List extends Component {
                 {this.state.clicked ?
                     '1':
                     <div className={'sidebar'}>
-                        <Search onSearchTextChange={this.onSearchTextChange}/>
+
                         <div className={'filters'}>
-                        <FilterEcoFriendly
-                            isChecked={isEcoChecked}
-                            onToggle={this.onEcoFilterToggle}
-                        />
-                        <FilterOpenNow
-                            isChecked={isOpenNowChecked}
-                            onToggle={this.onOpenNowFilterToggle}
-                        />
+                            <Search
+                                onSearchTextChange={this.onSearchTextChange}
+                            />
+                            <FilterOpenNow
+                                isChecked={isOpenNowChecked}
+                                onToggle={this.onOpenNowFilterToggle}
+                            />
+                            <FilterEcoFriendly
+                                isChecked={isEcoChecked}
+                                onToggle={this.onEcoFilterToggle}
+                            />
                         </div>
                         {/*<FilterAverageCheck
                             averageCheckBounds={averageCheckBounds}
@@ -143,14 +146,24 @@ class List extends Component {
                             {linesOfList.map((number, i) =>
                                 <li
                                     style={{color : number.properties.color}}
-                                    className={'listItem'}
+                                    className={'listItem cafeCard'}
                                     key={i}
                                     id={`cafeListItem_${number.properties.id}`}
                                     onClick={() => this.handleClick(number) }
                                     onMouseOver={() => this.props.onHighlightedCafeChange(number.properties.id)}
                                     onMouseLeave={() => this.props.onHighlightedCafeChange(null)}
                                 >
-                                    {number.properties.title}
+                                    <div className='cafeCard--header'>{number.properties.title}</div>
+                                    <div className='cafeCard--content'>
+                                        {number.properties.rating ?
+                                            <div className='cafeCard--rating'>
+                                                {number.properties.rating}
+                                            </div> :null}
+                                        <div className='cafeCard--address'>
+                                            {number.properties.description}
+                                        </div>
+                                    </div>
+
                                 </li>
                             )}
                         </ul>
