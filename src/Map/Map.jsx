@@ -111,7 +111,7 @@ class Map extends Component {
                             ],
                             "heatmap-opacity": [
                                 "interpolate", ["linear"], ["zoom"],
-                                10, 0.4,
+                                10, 0.9,
                                 14, 0
                             ],
                         }
@@ -146,7 +146,7 @@ class Map extends Component {
                             ],
                             "heatmap-opacity": [
                                 "interpolate", ["linear"], ["zoom"],
-                                10, 0.4,
+                                10, 0.9,
                                 14, 0
                             ],
                         }
@@ -182,7 +182,7 @@ class Map extends Component {
                             ],
                             "heatmap-opacity": [
                                 "interpolate", ["linear"], ["zoom"],
-                                10, 0.4,
+                                10, 0.9,
                                 14, 0
                             ],
                         }

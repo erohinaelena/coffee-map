@@ -66809,7 +66809,7 @@ class Map extends _react.Component {
                 "heatmap-intensity": ["interpolate", ["linear"], ["zoom"], 0, 1],
                 "heatmap-color": ["interpolate", ["linear"], ["heatmap-density"], 0, 'rgba(0,0,0,0)', 1, (0, _.getColorMagma)(3)],
                 "heatmap-radius": ["interpolate", ["linear"], ["get", "rating"], 1, 50],
-                "heatmap-opacity": ["interpolate", ["linear"], ["zoom"], 10, 0.4, 14, 0]
+                "heatmap-opacity": ["interpolate", ["linear"], ["zoom"], 10, 0.9, 14, 0]
               }
             }, 'waterway-label');
             this.map.addLayer({
@@ -66821,7 +66821,7 @@ class Map extends _react.Component {
                 "heatmap-intensity": ["interpolate", ["linear"], ["zoom"], 0, 1],
                 "heatmap-color": ["interpolate", ["linear"], ["heatmap-density"], 0, 'rgba(0,0,0,0)', 1, (0, _.getColorMagma)(4)],
                 "heatmap-radius": ["interpolate", ["linear"], ["get", "rating"], 1, 40],
-                "heatmap-opacity": ["interpolate", ["linear"], ["zoom"], 10, 0.4, 14, 0]
+                "heatmap-opacity": ["interpolate", ["linear"], ["zoom"], 10, 0.9, 14, 0]
               }
             }, 'waterway-label');
             this.map.addLayer({
@@ -66833,7 +66833,7 @@ class Map extends _react.Component {
                 "heatmap-intensity": ["interpolate", ["linear"], ["zoom"], 0, 1],
                 "heatmap-color": ["interpolate", ["linear"], ["heatmap-density"], 0, 'rgba(0,0,0,0)', 1, (0, _.getColorMagma)(5)],
                 "heatmap-radius": ["interpolate", ["linear"], ["get", "rating"], 1, 30],
-                "heatmap-opacity": ["interpolate", ["linear"], ["zoom"], 10, 0.4, 14, 0]
+                "heatmap-opacity": ["interpolate", ["linear"], ["zoom"], 10, 0.9, 14, 0]
               }
             }, 'waterway-label'); //                     this.map.addLayer({
             //                         "id": "heatmap",
