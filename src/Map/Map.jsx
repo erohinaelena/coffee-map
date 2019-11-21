@@ -46,13 +46,13 @@ class Map extends Component {
                         'paint': {
                             'circle-radius': {
                                 'base': 3,
-                                'stops': [[10, 2], [14, 10]]
+                                'stops': [[10, 10], [14, 10]]
                             },
                             'circle-color':  ['get','color'],
                             //'circle-opacity': 1,
                             'circle-opacity': {
                                 'base': 3,
-                                'stops': [[10, 0.8], [12, 1]]
+                                'stops': [[10, 0.3], [12, 1]]
                             },
                             'circle-stroke-width': 0,
                             'circle-stroke-color': '#00bf7c',
@@ -67,14 +67,12 @@ class Map extends Component {
                             'icon-image': 'none',
                             'text-field': ['get', 'title'],
                             'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
-                            'text-offset': [0, 0.6],
+                            'text-offset': [0, 0.8],
                             'text-anchor': 'top',
                             'text-size': {
                                 'stops': [
-                                    [0, 0],
                                     [14, 0],
-                                    [14.1, 16],
-                                    [15, 20]
+                                    [14.001, 12]
                                 ]
                             },
                             'icon-allow-overlap': true,
@@ -83,110 +81,110 @@ class Map extends Component {
                         }
                     });
 
-                    this.map.addLayer({
-                        "id": "heatmap3",
-                        "type": "heatmap",
-                        "source": geojsonPoints,
-                        "paint": {
-                            "heatmap-weight": [
-                                "interpolate", ["exponential", 10000], ["get", "rating"],
-                                0, 0,
-                                1, 0,
-                                2, 1,
-                                4, 0,
-                                5, 0
-                            ],
-                            "heatmap-intensity": [
-                                "interpolate", ["linear"], ["zoom"],
-                                0, 1
-                            ],
-                            "heatmap-color": [
-                                "interpolate", ["linear"], ["heatmap-density"],
-                                0, 'rgba(0,0,0,0)',
-                                1, getColorMagma(3)
-                            ],
-                            "heatmap-radius": [
-                                "interpolate", ["linear"], ["get", "rating"],
-                                1, 50
-                            ],
-                            "heatmap-opacity": [
-                                "interpolate", ["linear"], ["zoom"],
-                                10, 0.9,
-                                14, 0
-                            ],
-                        }
-                    }, 'waterway-label');
+                    //this.map.addLayer({
+                        //"id": "heatmap3",
+                        //"type": "heatmap",
+                        //"source": geojsonPoints,
+                        //"paint": {
+                            //"heatmap-weight": [
+                                //"interpolate", ["exponential", 10000], ["get", "rating"],
+                                //0, 0,
+                                //1, 0,
+                                //2, 1,
+                                //4, 0,
+                                //5, 0
+                            //],
+                            //"heatmap-intensity": [
+                                //"interpolate", ["linear"], ["zoom"],
+                                //0, 1
+                            //],
+                            //"heatmap-color": [
+                                //"interpolate", ["linear"], ["heatmap-density"],
+                                //0, 'rgba(0,0,0,0)',
+                                //1, getColorMagma(3)
+                            //],
+                            //"heatmap-radius": [
+                                //"interpolate", ["linear"], ["get", "rating"],
+                                //1, 60
+                            //],
+                            //"heatmap-opacity": [
+                                //"interpolate", ["linear"], ["zoom"],
+                                ////10, 0.9,
+                                //14, 0
+                            //],
+                        //}
+                    //}, 'waterway-label');
 
 
 									
-                    this.map.addLayer({
-                        "id": "heatmap4",
-                        "type": "heatmap",
-                        "source": geojsonPoints,
-                        "paint": {
-                            "heatmap-weight": [
-                                "interpolate", ["exponential", 10000], ["get", "rating"],
-                                1, 0,
-                                2, 0,
-                                4, 1,
-                                5, 0
-                            ],
-                            "heatmap-intensity": [
-                                "interpolate", ["linear"], ["zoom"],
-                                0, 1
-                            ],
-                            "heatmap-color": [
-                                "interpolate", ["linear"], ["heatmap-density"],
-                                0, 'rgba(0,0,0,0)',
-                                1, getColorMagma(4)
-                            ],
-                            "heatmap-radius": [
-                                "interpolate", ["linear"], ["get", "rating"],
-                                1, 40
-                            ],
-                            "heatmap-opacity": [
-                                "interpolate", ["linear"], ["zoom"],
-                                10, 0.9,
-                                14, 0
-                            ],
-                        }
-                    }, 'waterway-label');
+                    //this.map.addLayer({
+                        //"id": "heatmap4",
+                        //"type": "heatmap",
+                        //"source": geojsonPoints,
+                        //"paint": {
+                            //"heatmap-weight": [
+                                //"interpolate", ["exponential", 10000], ["get", "rating"],
+                                //1, 0,
+                                //2, 0,
+                                //4, 1,
+                                //5, 0
+                            //],
+                            //"heatmap-intensity": [
+                                //"interpolate", ["linear"], ["zoom"],
+                                //0, 1
+                            //],
+                            //"heatmap-color": [
+                                //"interpolate", ["linear"], ["heatmap-density"],
+                                //0, 'rgba(0,0,0,0)',
+                                //1, getColorMagma(4)
+                            //],
+                            //"heatmap-radius": [
+                                //"interpolate", ["linear"], ["get", "rating"],
+                                //1, 40
+                            //],
+                            //"heatmap-opacity": [
+                                //"interpolate", ["linear"], ["zoom"],
+                                ////10, 0.9,
+                                //14, 0
+                            //],
+                        //}
+                    //}, 'waterway-label');
 
 
 
 									
-                    this.map.addLayer({
-                        "id": "heatmap5",
-                        "type": "heatmap",
-                        "source": geojsonPoints,
-                        "paint": {
-                            "heatmap-weight": [
-                                "interpolate", ["exponential", 10000], ["get", "rating"],
-                                0, 0,
-                                2, 0,
-                                4, 0,
-                                5, 1
-                            ],
-                            "heatmap-intensity": [
-                                "interpolate", ["linear"], ["zoom"],
-                                0, 1
-                            ],
-                            "heatmap-color": [
-                                "interpolate", ["linear"], ["heatmap-density"],
-                                0, 'rgba(0,0,0,0)',
-                                1, getColorMagma(5)
-                            ],
-                            "heatmap-radius": [
-                                "interpolate", ["linear"], ["get", "rating"],
-                                1, 30
-                            ],
-                            "heatmap-opacity": [
-                                "interpolate", ["linear"], ["zoom"],
-                                10, 0.9,
-                                14, 0
-                            ],
-                        }
-                    }, 'waterway-label');
+                    //this.map.addLayer({
+                        //"id": "heatmap5",
+                        //"type": "heatmap",
+                        //"source": geojsonPoints,
+                        //"paint": {
+                            //"heatmap-weight": [
+                                //"interpolate", ["exponential", 10000], ["get", "rating"],
+                                //0, 0,
+                                //2, 0,
+                                //4, 0,
+                                //5, 1
+                            //],
+                            //"heatmap-intensity": [
+                                //"interpolate", ["linear"], ["zoom"],
+                                //0, 1
+                            //],
+                            //"heatmap-color": [
+                                //"interpolate", ["linear"], ["heatmap-density"],
+                                //0, 'rgba(0,0,0,0)',
+                                //1, getColorMagma(5)
+                            //],
+                            //"heatmap-radius": [
+                                //"interpolate", ["linear"], ["get", "rating"],
+                                //1, 20
+                            //],
+                            //"heatmap-opacity": [
+                                //"interpolate", ["linear"], ["zoom"],
+                                ////10, 0.9,
+                                //14, 0
+                            //],
+                        //}
+                    //}, 'waterway-label');
 
 
 
