@@ -128,7 +128,6 @@ class Map extends Component {
                     });
                 });
             }
-            createCafePopUp(this.map);
 
             this.map.on('moveend', () => {
                 this.props.zoomValue(this.map.getZoom());
@@ -173,30 +172,3 @@ class Map extends Component {
 }
 
 export default Map;
-
-function createCafePopUp(map) {
-
-    let popup = new mapboxgl.Popup({
-        closeButton: false,
-        closeOnClick: false
-    });
-
-    map.on('mouseenter', 'locations', function (e) {
-
-        let coordinates = e.features[0].geometry.coordinates.slice();
-        let description = e.features[0].properties.description;
-        let title = e.features[0].properties.title;
-
-        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-        }
-
-        popup.setLngLat(coordinates)
-            .setHTML(title + '<br>' +description)
-            .addTo(map);
-    });
-
-    map.on('mouseleave', 'locations', function () {
-        popup.remove();
-    });
-}

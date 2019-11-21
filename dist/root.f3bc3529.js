@@ -66843,7 +66843,6 @@ class Map extends _react.Component {
           });
         }
 
-        createCafePopUp(this.map);
         this.map.on('moveend', () => {
           this.props.zoomValue(this.map.getZoom());
           this.props.updateBounds(this.map.getBounds());
@@ -66890,27 +66889,6 @@ class Map extends _react.Component {
 
 var _default = Map;
 exports.default = _default;
-
-function createCafePopUp(map) {
-  let popup = new _mapboxGl.default.Popup({
-    closeButton: false,
-    closeOnClick: false
-  });
-  map.on('mouseenter', 'locations', function (e) {
-    let coordinates = e.features[0].geometry.coordinates.slice();
-    let description = e.features[0].properties.description;
-    let title = e.features[0].properties.title;
-
-    while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-      coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-    }
-
-    popup.setLngLat(coordinates).setHTML(title + '<br>' + description).addTo(map);
-  });
-  map.on('mouseleave', 'locations', function () {
-    popup.remove();
-  });
-}
 },{"react":"../node_modules/react/index.js","mapbox-gl":"../node_modules/mapbox-gl/dist/mapbox-gl.js","@mapbox/mapbox-gl-language":"../node_modules/@mapbox/mapbox-gl-language/index.js"}],"Filters/Search.jsx":[function(require,module,exports) {
 "use strict";
 
@@ -89558,7 +89536,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63877" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40748" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
