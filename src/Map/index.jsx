@@ -12,7 +12,7 @@ import CafeCard from "../CafeCard";
 import BarCharts from "../BarCharts";
 import ConnectingLineLayer from '../ConnectingLineLayer';
 
-const getColorMagma =  scaleSequential([3, 5], d => interpolateMagma(d/2+0.25)).clamp(true);
+export const getColorMagma =  scaleSequential([3, 5], d => interpolateMagma(d/2+0.25)).clamp(true);
 
 class MapContainer extends Component {
     state = {

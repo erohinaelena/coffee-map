@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import mapboxgl from 'mapbox-gl';
 import MapboxLanguage from '@mapbox/mapbox-gl-language'
+import {getColorMagma} from './';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiZXJvaGluYWVsZW5hIiwiYSI6InNWVFJmZFUifQ.ZjRE101FtM3fXPJiw2Fq9g';
 
@@ -14,8 +15,8 @@ class Map extends Component {
             container: 'map',
             style: 'mapbox://styles/mapbox/light-v9',
             center: [37.617635, 55.755814],
-            minZoom: 9,
-            maxBounds: bounds,
+            minZoom: 10,
+            //maxBounds: bounds,
         });
 
         this.translate(map);
@@ -77,7 +78,130 @@ class Map extends Component {
                             'visibility': 'visible'
                         }
                     });
+
+                    this.map.addLayer({
+                        "id": "heatmap2",
+                        "type": "heatmap",
+                        "source": geojsonPoints,
+                        "paint": {
+                            "heatmap-weight": [
+                                "interpolate", ["linear"], ["get", "rating"],
+                                0, 0,
+                                1, 1,
+                                5, 0
+                            ],
+                            "heatmap-intensity": [
+                                "interpolate", ["linear"], ["zoom"],
+                                0, 1,
+                                14, 5
+                            ],
+                            "heatmap-color": [
+                                "interpolate", ["linear"], ["heatmap-density"],
+                                0.2, 'rgba(0,0,0,0)',
+                                2, getColorMagma(3)
+                            ],
+                            "heatmap-radius": [
+                                "interpolate", ["linear"], ["get", "rating"],
+                                0, 0,
+                                1, 50,
+                                3, 20,
+                                5, 0
+                            ],
+                            "heatmap-opacity": [
+                                "interpolate", ["linear"], ["zoom"],
+                                7, 2,
+                                14, 0.5
+                            ],
+                        }
+                    }, 'waterway-label');
+                    this.map.addLayer({
+                        "id": "heatmap",
+                        "type": "heatmap",
+                        "source": geojsonPoints,
+                        "paint": {
+// Increase the heatmap weight based on frequency and property magnitude
+                            "heatmap-weight": [
+                                "interpolate", ["linear"], ["get", "rating"],
+                                0, 0,
+                                8, 1
+                            ],
+// Increase the heatmap color weight weight by zoom level
+// heatmap-intensity is a multiplier on top of heatmap-weight
+                            "heatmap-intensity": [
+                                "interpolate", ["linear"], ["zoom"],
+                                0, 1,
+                                14, 14
+                            ],
+// Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
+// Begin color ramp at 0-stop with a 0-transparancy color
+// to create a blur-like effect.
+                            "heatmap-color": [
+                                "interpolate", ["linear"], ["heatmap-density"],
+                                0.2, 'rgba(0,0,0,0)',
+                                3, getColorMagma(5)
+                            ],
+// Adjust the heatmap radius by zoom level
+                            "heatmap-radius": [
+                                "interpolate", ["linear"], ["get", "rating"],
+                                0, 0,
+                                1, 0,
+                                5, 30
+                            ],
+// Transition from heatmap to circle layer by zoom level
+                            "heatmap-opacity": [
+                                "interpolate", ["linear"], ["zoom"],
+                                7, 1,
+                                14, 0.5
+                            ],
+                        }
+                    }, 'waterway-label');
+
+//                     this.map.addLayer({
+//                         "id": "heatmap",
+//                         "type": "heatmap",
+//                         "source": geojsonPoints,
+//                         "paint": {
+// // Increase the heatmap weight based on frequency and property magnitude
+//                             "heatmap-weight": [
+//                                 "interpolate", ["linear"], ["get", "rating"],
+//                                 0, 0,
+//                                 2.9, 0,
+//                                 3, -0.5,
+//                                 5, 1
+//                             ],
+// // Increase the heatmap color weight weight by zoom level
+// // heatmap-intensity is a multiplier on top of heatmap-weight
+//                             "heatmap-intensity": [
+//                                 "interpolate", ["linear"], ["zoom"],
+//                                 0, 1,
+//                                 14, 14
+//                             ],
+// // Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
+// // Begin color ramp at 0-stop with a 0-transparancy color
+// // to create a blur-like effect.
+//                             "heatmap-color": [
+//                                 "interpolate", ["linear"], ["heatmap-density"],
+//                                 0.2, 'rgba(0,0,0,0)',
+//                                 0.3, getColorMagma(3),
+//                                 0.5, getColorMagma(4),
+//                                 1, getColorMagma(5)
+//                             ],
+// // Adjust the heatmap radius by zoom level
+//                             "heatmap-radius": [
+//                                 "interpolate", ["linear"], ["zoom"],
+//                                 1, 0,
+//                                 14, 40
+//                             ],
+// // Transition from heatmap to circle layer by zoom level
+//                             "heatmap-opacity": [
+//                                 "interpolate", ["linear"], ["zoom"],
+//                                 7, 1,
+//                                 14, 0.5
+//                             ],
+//                         }
+//                     }, 'waterway-label');
                 });
+
 
                 this.map.on('click', 'locations', (e) => {
                     const currentFeature = e.features[0];
@@ -98,7 +222,7 @@ class Map extends Component {
                 });
             }
 
-            if (geojsonConturs) {
+            if (false) {
                 this.map.on('load', () => {
                     this.map.addSource('cafeRating', {
                         'type': 'geojson',

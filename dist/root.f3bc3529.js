@@ -66723,6 +66723,8 @@ var _mapboxGl = _interopRequireDefault(require("mapbox-gl"));
 
 var _mapboxGlLanguage = _interopRequireDefault(require("@mapbox/mapbox-gl-language"));
 
+var _ = require("./");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
@@ -66740,8 +66742,8 @@ class Map extends _react.Component {
       container: 'map',
       style: 'mapbox://styles/mapbox/light-v9',
       center: [37.617635, 55.755814],
-      minZoom: 9,
-      maxBounds: bounds
+      minZoom: 10 //maxBounds: bounds,
+
     });
     this.translate(map);
     this.map = map;
@@ -66794,6 +66796,81 @@ class Map extends _react.Component {
                 'visibility': 'visible'
               }
             });
+            this.map.addLayer({
+              "id": "heatmap2",
+              "type": "heatmap",
+              "source": geojsonPoints,
+              "paint": {
+                "heatmap-weight": ["interpolate", ["linear"], ["get", "rating"], 0, 0, 1, 1, 5, 0],
+                "heatmap-intensity": ["interpolate", ["linear"], ["zoom"], 0, 1, 14, 5],
+                "heatmap-color": ["interpolate", ["linear"], ["heatmap-density"], 0.2, 'rgba(0,0,0,0)', 2, (0, _.getColorMagma)(3)],
+                "heatmap-radius": ["interpolate", ["linear"], ["get", "rating"], 0, 0, 1, 50, 3, 20, 5, 0],
+                "heatmap-opacity": ["interpolate", ["linear"], ["zoom"], 7, 2, 14, 0.5]
+              }
+            }, 'waterway-label');
+            this.map.addLayer({
+              "id": "heatmap",
+              "type": "heatmap",
+              "source": geojsonPoints,
+              "paint": {
+                // Increase the heatmap weight based on frequency and property magnitude
+                "heatmap-weight": ["interpolate", ["linear"], ["get", "rating"], 0, 0, 8, 1],
+                // Increase the heatmap color weight weight by zoom level
+                // heatmap-intensity is a multiplier on top of heatmap-weight
+                "heatmap-intensity": ["interpolate", ["linear"], ["zoom"], 0, 1, 14, 14],
+                // Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
+                // Begin color ramp at 0-stop with a 0-transparancy color
+                // to create a blur-like effect.
+                "heatmap-color": ["interpolate", ["linear"], ["heatmap-density"], 0.2, 'rgba(0,0,0,0)', 3, (0, _.getColorMagma)(5)],
+                // Adjust the heatmap radius by zoom level
+                "heatmap-radius": ["interpolate", ["linear"], ["get", "rating"], 0, 0, 1, 0, 5, 30],
+                // Transition from heatmap to circle layer by zoom level
+                "heatmap-opacity": ["interpolate", ["linear"], ["zoom"], 7, 1, 14, 0.5]
+              }
+            }, 'waterway-label'); //                     this.map.addLayer({
+            //                         "id": "heatmap",
+            //                         "type": "heatmap",
+            //                         "source": geojsonPoints,
+            //                         "paint": {
+            // // Increase the heatmap weight based on frequency and property magnitude
+            //                             "heatmap-weight": [
+            //                                 "interpolate", ["linear"], ["get", "rating"],
+            //                                 0, 0,
+            //                                 2.9, 0,
+            //                                 3, -0.5,
+            //                                 5, 1
+            //                             ],
+            // // Increase the heatmap color weight weight by zoom level
+            // // heatmap-intensity is a multiplier on top of heatmap-weight
+            //                             "heatmap-intensity": [
+            //                                 "interpolate", ["linear"], ["zoom"],
+            //                                 0, 1,
+            //                                 14, 14
+            //                             ],
+            // // Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
+            // // Begin color ramp at 0-stop with a 0-transparancy color
+            // // to create a blur-like effect.
+            //                             "heatmap-color": [
+            //                                 "interpolate", ["linear"], ["heatmap-density"],
+            //                                 0.2, 'rgba(0,0,0,0)',
+            //                                 0.3, getColorMagma(3),
+            //                                 0.5, getColorMagma(4),
+            //                                 1, getColorMagma(5)
+            //                             ],
+            // // Adjust the heatmap radius by zoom level
+            //                             "heatmap-radius": [
+            //                                 "interpolate", ["linear"], ["zoom"],
+            //                                 1, 0,
+            //                                 14, 40
+            //                             ],
+            // // Transition from heatmap to circle layer by zoom level
+            //                             "heatmap-opacity": [
+            //                                 "interpolate", ["linear"], ["zoom"],
+            //                                 7, 1,
+            //                                 14, 0.5
+            //                             ],
+            //                         }
+            //                     }, 'waterway-label');
           });
           this.map.on('click', 'locations', e => {
             const currentFeature = e.features[0];
@@ -66813,7 +66890,7 @@ class Map extends _react.Component {
           });
         }
 
-        if (geojsonConturs) {
+        if (false) {
           this.map.on('load', () => {
             this.map.addSource('cafeRating', {
               'type': 'geojson',
@@ -66911,7 +66988,7 @@ function createCafePopUp(map) {
     popup.remove();
   });
 }
-},{"react":"../node_modules/react/index.js","mapbox-gl":"../node_modules/mapbox-gl/dist/mapbox-gl.js","@mapbox/mapbox-gl-language":"../node_modules/@mapbox/mapbox-gl-language/index.js"}],"Filters/Search.jsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","mapbox-gl":"../node_modules/mapbox-gl/dist/mapbox-gl.js","@mapbox/mapbox-gl-language":"../node_modules/@mapbox/mapbox-gl-language/index.js","./":"Map/index.jsx"}],"Filters/Search.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -89266,7 +89343,7 @@ exports.default = _default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports.default = exports.getColorMagma = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -89303,6 +89380,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 const getColorMagma = (0, _d3Scale.scaleSequential)([3, 5], d => (0, _d3ScaleChromatic.interpolateMagma)(d / 2 + 0.25)).clamp(true);
+exports.getColorMagma = getColorMagma;
 
 class MapContainer extends _react.Component {
   constructor() {
