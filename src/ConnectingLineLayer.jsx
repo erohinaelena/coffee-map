@@ -17,17 +17,16 @@ class ConnectingLineLayer extends Component {
 
 	calculateCoordinates () {
 		const {filteredItemsList, highlightedItemId, mapBounds} = this.props;
-		if (highlightedItemId === null) {
-			this.setState({
-				x1: 0,
-				y1: 0,
-				x2: 0,
-				y2: 0
-			});
+		if (!highlightedItemId) {
+			this.clearLine();
 			return;
 		}
 		const pointData = filteredItemsList.find(
 			(item) => item.properties.id === highlightedItemId);
+		if (!pointData || !pointData.geometry || !pointData.geometry.coordinates) {
+			this.clearLine();
+			return;
+		}
 		const coordinates = pointData.geometry.coordinates;
 		const [pointLng, pointLat] = coordinates;
 		const sw = mapBounds.getSouthWest();
@@ -45,6 +44,15 @@ class ConnectingLineLayer extends Component {
 			x2: listItemBBox.x + listItemBBox.width - 5,
 			y2: listItemBBox.y + listItemBBox.height / 2,
 			color: pointData.properties.color
+		})
+	}
+
+	clearLine () {
+		this.setState({
+			x1: 0,
+			y1: 0,
+			x2: 0,
+			y2: 0
 		})
 	}
 
