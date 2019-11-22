@@ -7,13 +7,13 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiZXJvaGluYWVsZW5hIiwiYSI6InNWVFJmZFUifQ.ZjRE10
 class Map extends Component {
     componentDidMount() {
         const bounds = [
-            [36.7839, 55.134], // Southwest coordinates
-            [38.0038, 56.0559]  // Northeast coordinates
+            [36.5535610167, 55.1281419266], // Southwest coordinates
+            [38.6738519565, 56.3505776833]  // Northeast coordinates
         ];
         const map = new mapboxgl.Map({
             container: 'map',
             style: 'mapbox://styles/mapbox/light-v9',
-            center: [37.617635, 55.755814],
+            center: [37.623597, 55.751583],
             minZoom: 9,
             maxBounds: bounds,
             //doubleClickZoom: false,
@@ -84,7 +84,6 @@ class Map extends Component {
 
                 this.map.on('click', 'locations', (e) => {
                     const currentFeature = e.features[0];
-                    debugger
                     this.props.selectedPoint(currentFeature)
                 });
 
@@ -138,13 +137,13 @@ class Map extends Component {
 
         if (this.map.getLayer('locations')) {
             const filterNames = this.props.filteredItemsList;
-            if (filterNames.length>1) {
-                const filterIds = filterNames.map(el => el.properties.id);
-
-                const filter = ['match', ['get', 'id'], filterIds, true, false];
-                this.map.setFilter('locations', filter);
-                this.map.setFilter('locations-text', filter);
-            }
+            let filterIds, filter
+            if (filterNames.length >= 1) {
+                filterIds = filterNames.map(el => el.properties.id);
+                filter = ['match', ['get', 'id'], filterIds, true, false];
+            } else filter = ['==', 'Z','X'] //nonsense filter
+            this.map.setFilter('locations', filter);
+            this.map.setFilter('locations-text', filter);
         }
     }
 

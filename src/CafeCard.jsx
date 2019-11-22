@@ -27,7 +27,7 @@ class CafeCard extends Component {
 
         const fullInfo = this.state.info,
             info = this.props.target.properties
-debugger
+
         const week=['Пн','Вт','Ср','Чт','Пт','Сб','Вс']
         const workTime = Array.isArray(info.workTime) ? info.workTime : JSON.parse(info.workTime)
         const shedule = workTime.map((a,i)=>{return {day:i, time: a[0]}}).filter(el => el.time!=undefined)
