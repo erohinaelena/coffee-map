@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import Search from './Filters/Search.jsx'
 import FilterEcoFriendly from './Filters/FilterEcoFriendly.jsx'
 import FilterOpenNow from './Filters/FilterOpenNow.jsx'
-import FilterAverageCheck from './Filters/FilterAverageCheck.jsx'
 import lodash from 'lodash';
 
 class List extends Component {
@@ -11,7 +10,6 @@ class List extends Component {
         searchText: '',
         isEcoChecked: false,
         isOpenNowChecked: false,
-        averageCheckBounds: [-Infinity, +Infinity],
         linesOfList: [],
         clicked: false
     };
@@ -44,7 +42,7 @@ class List extends Component {
         const sw = mapBounds.getSouthWest();
         const ne = mapBounds.getNorthEast();
         const searchedText = this.state.searchText.toLowerCase();
-        const {isEcoChecked, isOpenNowChecked, averageCheckBounds} = this.state;
+        const {isEcoChecked, isOpenNowChecked} = this.state;
 
         const today = new Date();
         const weekDay = today.getDay();
@@ -78,7 +76,7 @@ class List extends Component {
                         return false;
                     }
                 }
-                // + должна быть проверка на эко-френдли и цену
+                // + должна быть проверка на эко-френдли
                 return true;
             })
             .sort((a,b) => b.properties.rating - a.properties.rating);
@@ -112,13 +110,6 @@ class List extends Component {
         );
     };
 
-    onAverageCheckBoundsChange = (averageCheckBounds) => {
-        this.setState(
-            {averageCheckBounds},
-            this.updateLinesOfList
-        );
-    };
-
     handleClick = (number) => {
         this.props.currentItem(number)
     };
@@ -128,8 +119,7 @@ class List extends Component {
         const {
             linesOfList,
             isEcoChecked,
-            isOpenNowChecked,
-            averageCheckBounds
+            isOpenNowChecked
         } = this.state;
 
         return ReactDOM.createPortal(
@@ -151,10 +141,6 @@ class List extends Component {
                                 onToggle={this.onEcoFilterToggle}
                             />
                         </div>
-                        {/*<FilterAverageCheck
-                            averageCheckBounds={averageCheckBounds}
-                            onAverageCheckBoundsChange={this.onAverageCheckBoundsChange}
-                        />*/}
                         <ul className={'scrollable'}>
                             {linesOfList.map((number, i) =>
                                 <li
@@ -164,7 +150,7 @@ class List extends Component {
                                     id={`cafeListItem_${number.properties.id}`}
                                     onClick={() => this.handleClick(number) }
                                     onMouseOver={() => this.props.onHighlightedCafeChange(number.properties.id)}
-                                    onMouseLeave={() => this.props.onHighlightedCafeChange(null)}
+                                    onMouseOut={() => this.props.onHighlightedCafeChange(null)}
                                 >
                                     <div className='cafeCard--header'>{number.properties.title}</div>
                                     <div className='cafeCard--content'>

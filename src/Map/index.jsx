@@ -14,6 +14,16 @@ import ConnectingLineLayer from '../ConnectingLineLayer';
 
 const getColorMagma =  scaleSequential([3, 5], d => interpolateMagma(d/2+0.25)).clamp(true);
 
+const isMobile = () => {
+    if (window.screen && window.screen.availWidth < 600) {
+        return true;
+    }
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    return (/Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone/i).test(userAgent);
+};
+const IS_MOBILE = isMobile();
+
+
 class MapContainer extends Component {
     state = {
         points: null,
@@ -22,32 +32,32 @@ class MapContainer extends Component {
         highlightedItemId: null,
         filteredItems: [],
         rawData:[],
+        rawDataMap:[],
         zoomValue: 9,
         mapBounds: null
     };
 
-    componentDidMount() {
+    async componentDidMount() {
         ///  GET DATA HERE
-        // async await вроде не нужен
-        csv(data).then((data) => {
-            json(moscow).then((geoMoscow) => {
+        const [
+            csvData,
+            geoMoscow
+        ] = await Promise.all([
+            csv(data),
+            json(moscow)
+        ]);
+        const geoJSON = makeGeoJSON(csvData);
+        const regionRating =  nest()
+            .key(d=>d['Район города'])
+            .rollup(els => mean(els, d => (+d['FlampRating'].replace(',', '.') || NaN)))
+            .entries(csvData);
+        addValues(geoMoscow, regionRating);
 
-                const geoJSON = makeGeoJSON(data);
-
-                const regionRating =  nest()
-                    .key(d=>d['Район города'])
-                    .rollup(els => mean(els, d => (+d['FlampRating'].replace(',', '.') || NaN)))
-                    .entries(data);
-                addValues(geoMoscow, regionRating);
-
-                this.setState({
-                    rawData: data,
-                    points: geoJSON,
-                    conturs: geoMoscow,
-                    filteredItems: geoJSON.data.features
-                })
-            })
-
+        this.setState({
+            rawData: csvData,
+            points: geoJSON,
+            conturs: geoMoscow,
+            filteredItems: geoJSON.data.features
         });
     }
 
@@ -111,12 +121,13 @@ class MapContainer extends Component {
                      onHighlightedCafeChange={this.onHighlightedCafeChange}
                 />
 
-                <ConnectingLineLayer
-                    mapBounds={this.state.mapBounds}
-                    highlightedItemId={this.state.highlightedItemId}
-                    filteredItemsList={this.state.filteredItems}
-                />
-
+                {!IS_MOBILE && (
+                    <ConnectingLineLayer
+                        mapBounds={this.state.mapBounds}
+                        highlightedItemId={this.state.highlightedItemId}
+                        filteredItemsList={this.state.filteredItems}
+                    />
+                )}
             </div>
         );
     }
