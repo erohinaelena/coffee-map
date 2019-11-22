@@ -137,7 +137,7 @@ class Map extends Component {
         if (this.map.getLayer('locations')) {
             const filterNames = this.props.filteredItemsList;
             let filterIds, filter
-            if (filterNames.length > 1) {
+            if (filterNames.length >= 1) {
                 filterIds = filterNames.map(el => el.properties.id);
                 filter = ['match', ['get', 'id'], filterIds, true, false];
             } else filter = ['==', 'Z','X'] //nonsense filter
