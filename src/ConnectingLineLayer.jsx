@@ -41,7 +41,7 @@ class ConnectingLineLayer extends Component {
 		this.setState({
 			x1: xPosition + mapBBox.x,
 			y1: yPosition + mapBBox.y,
-			x2: listItemBBox.x + listItemBBox.width - 5,
+			x2: listItemBBox.x + listItemBBox.width,
 			y2: listItemBBox.y + listItemBBox.height / 2,
 			color: pointData.properties.color
 		})

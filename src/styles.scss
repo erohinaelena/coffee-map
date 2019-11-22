@@ -281,6 +281,13 @@ body {
 
     .listItem {
         padding: 13px 3px 11px;
+        cursor: pointer;
+        border: 1px solid black;
+        box-sizing: border-box;
+        border-radius: 8px;
+        &:hover{
+            border: 1px solid var(--mywar);
+        }
     }
 }
 

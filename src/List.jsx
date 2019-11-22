@@ -114,6 +114,10 @@ class List extends Component {
         this.props.currentItem(number)
     };
 
+    toggleHover = () =>{
+        this.setState({hover: !this.state.hover})
+    }
+
 
     render() {
         const {
@@ -142,28 +146,34 @@ class List extends Component {
                             />
                         </div>
                         <ul className={'scrollable'}>
-                            {linesOfList.map((number, i) =>
-                                <li
-                                    style={{color : number.properties.color}}
-                                    className={'listItem cafeCard'}
-                                    key={i}
-                                    id={`cafeListItem_${number.properties.id}`}
-                                    onClick={() => this.handleClick(number) }
-                                    onMouseOver={() => this.props.onHighlightedCafeChange(number.properties.id)}
-                                    onMouseOut={() => this.props.onHighlightedCafeChange(null)}
-                                >
-                                    <div className='cafeCard--header'>{number.properties.title}</div>
-                                    <div className='cafeCard--content'>
-                                        {number.properties.rating ?
-                                            <div className='cafeCard--rating'>
-                                                {number.properties.rating}
-                                            </div> :null}
-                                        <div className='cafeCard--address'>
-                                            {number.properties.description}
-                                        </div>
-                                    </div>
+                            {linesOfList.map((number, i) => {
+                                    const style = {
+                                        color: `${number.properties.color}`,
+                                        '--mywar':`${number.properties.color}`
+                                    };
+                                    return <li
+                                        style={style}
+                                        className={'listItem cafeCard'}
+                                        key={i}
+                                        id={`cafeListItem_${number.properties.id}`}
+                                        onClick={() => this.handleClick(number)}
+                                        onMouseOver={() => this.props.onHighlightedCafeChange(number.properties.id)}
+                                        onMouseLeave={() =>  this.props.onHighlightedCafeChange(null)}
+                                    >
 
-                                </li>
+                                        <div className='cafeCard--header'>{number.properties.title}</div>
+                                        <div className='cafeCard--content'>
+                                            {number.properties.rating ?
+                                                <div className='cafeCard--rating'>
+                                                    {number.properties.rating}
+                                                </div> : null}
+                                            <div className='cafeCard--address'>
+                                                {number.properties.description}
+                                            </div>
+                                        </div>
+
+                                    </li>
+                                }
                             )}
                         </ul>
                     </div>
