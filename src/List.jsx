@@ -48,7 +48,8 @@ class List extends Component {
 
         const today = new Date();
         const weekDay = today.getDay();
-        const currentTimeStr = `${today.getHours()}:${today.getMinutes()}`;
+        const formatTime = (item) => item < 10 ? `0${item}`: item;
+        const currentTimeStr = `${formatTime(today.getHours())}:${formatTime(today.getMinutes())}`;
 
         return (rawPoints && rawPoints.data && rawPoints.data.features || [])
             .filter(({geometry, properties}) => {
