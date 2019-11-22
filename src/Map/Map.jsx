@@ -23,6 +23,7 @@ class Map extends Component {
         this.map = map;
         this.zoomThreshold = 11;
         this.props.updateBounds(this.map.getBounds());
+        console.log(this.props.pointsData, this.props.contursData, 'for empty map fix')
     }
 
     componentDidUpdate(prevProps) {
