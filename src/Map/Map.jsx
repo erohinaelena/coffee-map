@@ -46,10 +46,13 @@ class Map extends Component {
                         'paint': {
                             'circle-radius': {
                                 'base': 3,
-                                'stops': [[12, 3], [14, 6]]
+                                'stops': [[10, 10], [14, 10]]
                             },
                             'circle-color':  ['get','color'],
-                            'circle-opacity': 1,
+                                'circle-opacity': {
+                                'base': 3,
+                                'stops': [[10, 0.3], [12, 1]]
+                            },
                             'circle-stroke-width': 0,
                             'circle-stroke-color': '#00bf7c',
                             'circle-stroke-opacity': 1,
@@ -63,14 +66,12 @@ class Map extends Component {
                             'icon-image': 'none',
                             'text-field': ['get', 'title'],
                             'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
-                            'text-offset': [0, 0.6],
+                            'text-offset': [0, 0.8],
                             'text-anchor': 'top',
                             'text-size': {
                                 'stops': [
-                                    [0, 0],
                                     [14, 0],
-                                    [14.1, 16],
-                                    [15, 20]
+                                    [14.001, 12]
                                 ]
                             },
                             'icon-allow-overlap': true,
