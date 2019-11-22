@@ -82,7 +82,6 @@ class Map extends Component {
 
                 this.map.on('click', 'locations', (e) => {
                     const currentFeature = e.features[0];
-                    debugger
                     this.props.selectedPoint(currentFeature)
                 });
 
@@ -136,13 +135,13 @@ class Map extends Component {
 
         if (this.map.getLayer('locations')) {
             const filterNames = this.props.filteredItemsList;
-            if (filterNames.length>1) {
-                const filterIds = filterNames.map(el => el.properties.id);
-
-                const filter = ['match', ['get', 'id'], filterIds, true, false];
-                this.map.setFilter('locations', filter);
-                this.map.setFilter('locations-text', filter);
-            }
+            let filterIds, filter
+            if (filterNames.length > 1) {
+                filterIds = filterNames.map(el => el.properties.id);
+                filter = ['match', ['get', 'id'], filterIds, true, false];
+            } else filter = ['==', 'Z','X'] //nonsense filter
+            this.map.setFilter('locations', filter);
+            this.map.setFilter('locations-text', filter);
         }
     }
 

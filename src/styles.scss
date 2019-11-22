@@ -128,7 +128,7 @@ body {
         .cafeCard--rating{
             &:after {
                 content: "★ · ";
-                word-spacing: 3px;
+                word-spacing: 2px;
                 white-space: pre;
             }
         }
