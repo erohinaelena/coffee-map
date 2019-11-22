@@ -10,7 +10,10 @@ class ConnectingLineLayer extends Component {
 	};
 
 	componentDidUpdate (prevProps) {
-		if (prevProps.highlightedItemId !== this.props.highlightedItemId) {
+		if (
+			prevProps.highlightedItemId !== this.props.highlightedItemId ||
+			prevProps.mapBounds !== this.props.mapBounds
+		) {
 			this.calculateCoordinates();
 		}
 	}
