@@ -145,7 +145,14 @@ body {
             &--row{
                 flex-direction: row;
                 display: flex;
+                font-size: 16px;
                 align-items: baseline;
+                sup{
+                    font-size: 10px;
+                    vertical-align:top;
+                    position: relative;
+                    top: 0.18em;
+                }
                 :first-child{
                     flex:1;
                 }
@@ -153,6 +160,16 @@ body {
                     flex:5;
                 }
             }
+        }
+
+        &--website{
+            display: inline-block;
+            padding: 0px 12px 1px;
+            border: 1px solid #000000;
+            box-sizing: border-box;
+            border-radius: 999px;
+            text-decoration:none;
+            color: inherit;
         }
     }
 }

@@ -70,6 +70,15 @@ class CafeCard extends Component {
                         </div>
                     )}
                 </div>
+
+                {fullInfo['Сайты'] ?
+                    <a className='cafeCard--content--website'
+                        href={addHttp(fullInfo['Сайты'].match(/.*|/))}
+                        target='_blank'>
+                        Перейти на сайт
+                     </a>
+                    :null}
+
                 <div>
                     {fullInfo['Способ оплаты']=='Наличный расчёт' ? 'Оплата только наличными' : null}
                 </div>
@@ -83,3 +92,10 @@ class CafeCard extends Component {
 }
 
 export default CafeCard;
+
+function addHttp(url){
+    if (!/^https?:\/\//i.test(url)) {
+        url = 'http://' + url;
+    }
+    return url;
+}
