@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from "react-dom";
 import closeBtn from './img/close.svg'
+import instBtn from './img/insta.svg'
 import lodash, {isEqual} from 'lodash';
 import {nest} from 'd3-collection';
 import {mean} from "d3-array";
@@ -71,21 +72,34 @@ class CafeCard extends Component {
                     )}
                 </div>
 
-                {fullInfo['Сайты'] ?
-                    <a className='cafeCard--content--website'
-                        href={addHttp(fullInfo['Сайты'].match(/.*|/))}
-                        target='_blank'>
-                        Перейти на сайт
-                     </a>
+                <div className='cafeCard--content--phones'>
+                    {fullInfo['Телефоны']!="#ERROR!" ? fullInfo['Телефоны'] : null}
+                </div>
+
+                <div className='cafeCard--content--flex'>
+
+                    {fullInfo['Сайты'] ?
+                        <a className='cafeCard--content--website'
+                            href={addHttp(fullInfo['Сайты'].match(/.*|/))}
+                            target='_blank'>
+                            Перейти на сайт
+                         </a>
+                        :null}
+
+                    {fullInfo['Сайты']?
+                        <a className='cafeCard--content--insta'
+                           href={addHttp(fullInfo['Сайты'].match(/.*|/))}
+                           target='_blank'>
+                            <img alt='Go to Instagram' src={instBtn} width='14' height='15' />
+                        </a>
                     :null}
+
+                </div>
 
                 <div>
                     {fullInfo['Способ оплаты']=='Наличный расчёт' ? 'Оплата только наличными' : null}
                 </div>
-                <div>
-                    {fullInfo['Телефоны']!="#ERROR!" ? fullInfo['Телефоны'] : null}
-                </div>
-                <div>{info['FlampRating']}</div>
+
             </div>,
         document.getElementById('cafeCard'));
     }

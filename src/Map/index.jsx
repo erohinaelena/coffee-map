@@ -11,6 +11,7 @@ import moscow from '../data/mo.geojson'
 import CafeCard from "../CafeCard";
 import BarCharts from "../BarCharts";
 import ConnectingLineLayer from '../ConnectingLineLayer';
+import Legend from "../Legend";
 
 const getColorMagma =  scaleSequential([3, 5], d => interpolateMagma(d/2+0.25)).clamp(true);
 
@@ -94,6 +95,8 @@ class MapContainer extends Component {
     render() {
         return (
             <div>
+                <Legend />
+
                 {this.state.currentItem ?
                     <CafeCard target = {this.state.currentItem}
                               all = {this.state.rawData}
