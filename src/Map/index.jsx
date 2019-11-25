@@ -110,7 +110,6 @@ class MapContainer extends Component {
                 <List rawPoints={this.state.points}
                       currentItem={this.currentItemHandler} // to open card
                       onFilteredItemsChange={this.filteredItemsHandler}
-                      filteredItemsList={this.state.filteredItems}
                       onHighlightedCafeChange={this.onHighlightedCafeChange}
                       mapBounds={this.state.mapBounds}
                 />

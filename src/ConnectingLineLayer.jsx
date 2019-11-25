@@ -30,6 +30,11 @@ class ConnectingLineLayer extends Component {
 			this.clearLine();
 			return;
 		}
+		const listItem = document.getElementById(`cafeListItem_${pointData.properties.id}`);
+		if (!listItem) {
+			this.clearLine();
+			return;
+		}
 		const coordinates = pointData.geometry.coordinates;
 		const [pointLng, pointLat] = coordinates;
 		const sw = mapBounds.getSouthWest();
@@ -38,7 +43,7 @@ class ConnectingLineLayer extends Component {
 		const mapWidthInLng = ne.lng - sw.lng;
 		const mapHeightInLat = ne.lat - sw.lat;
 		const mapBBox = document.getElementById('map').getBoundingClientRect();
-		const listItemBBox = document.getElementById(`cafeListItem_${pointData.properties.id}`).getBoundingClientRect();
+		const listItemBBox = listItem.getBoundingClientRect();
 		const xPosition = (pointLng - nw.lng) / mapWidthInLng * mapBBox.width;
 		const yPosition = (nw.lat - pointLat) / mapHeightInLat * mapBBox.height;
 		this.setState({
