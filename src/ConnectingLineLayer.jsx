@@ -44,6 +44,10 @@ class ConnectingLineLayer extends Component {
 		const mapHeightInLat = ne.lat - sw.lat;
 		const mapBBox = document.getElementById('map').getBoundingClientRect();
 		const listItemBBox = listItem.getBoundingClientRect();
+		if (listItemBBox.y < 0 || listItemBBox.y > window.innerHeight) {
+			this.clearLine();
+			return;
+		}
 		const xPosition = (pointLng - nw.lng) / mapWidthInLng * mapBBox.width;
 		const yPosition = (nw.lat - pointLat) / mapHeightInLat * mapBBox.height;
 		this.setState({
@@ -70,7 +74,7 @@ class ConnectingLineLayer extends Component {
 			<svg className="connectingLineLayerSvg">
 				<line
 					stroke={color}
-					strokeWidth="0.5"
+					strokeWidth="1"
 					x1={x1}
 					y1={y1}
 					x2={x2}
