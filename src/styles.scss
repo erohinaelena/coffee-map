@@ -210,7 +210,7 @@ canvas#legend{
 #cafeList{
     display: flex;
     flex-grow: 1;
-    padding: 0 0 0 17px;
+    padding: 0;
 }
 
 .sidebar{
@@ -229,13 +229,14 @@ canvas#legend{
         right:0;
         display: block;
         overflow-y: scroll;
-        padding-left: 0;
+        padding-left: 8px;
         margin: 10px 0 0;
     }
 }
 
 .filters {
     padding-bottom:32px;
+    padding-left: 17px;
 
     .filter{
         background: rgba(196, 196, 196, 0.2);
@@ -334,7 +335,7 @@ canvas#legend{
     flex-direction: column;
 
     .listItem {
-        padding: 13px 3px 11px;
+        padding: 13px 3px 11px 11px;
         cursor: pointer;
         border: 1px solid black;
         box-sizing: border-box;
