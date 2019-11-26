@@ -15,6 +15,7 @@ class Map extends Component {
             style: 'mapbox://styles/mapbox/light-v9',
             center: [37.623597, 55.751583],
             minZoom: 9,
+            zoom:9.7,
             maxBounds: bounds,
             //doubleClickZoom: false,
         });

@@ -34,7 +34,7 @@ class MapContainer extends Component {
         filteredItems: [],
         rawData:[],
         rawDataMap:[],
-        zoomValue: 9,
+        zoomValue: 9.7,
         mapBounds: null
     };
 
