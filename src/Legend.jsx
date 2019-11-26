@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import {interpolateMagma} from 'd3-scale-chromatic';
 import {scaleSequential} from 'd3-scale';
 
-const getColorMagma =  scaleSequential([3, 5], d => interpolateMagma(d/2.5+0.35)).clamp(true);
+const getColorMagma =  scaleSequential([3, 5], d => interpolateMagma(d/4+0.5)).clamp(true);
 
 class Legend extends Component {
     componentDidMount() {

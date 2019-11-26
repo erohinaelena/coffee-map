@@ -13,7 +13,7 @@ import BarCharts from "../BarCharts";
 import ConnectingLineLayer from '../ConnectingLineLayer';
 import Legend from "../Legend";
 
-const getColorMagma =  scaleSequential([3, 5], d => interpolateMagma(d/2.5+0.35)).clamp(true);
+const getColorMagma =  scaleSequential([3, 5], d => interpolateMagma(d/4+0.5)).clamp(true);
 
 const isMobile = () => {
     if (window.screen && window.screen.availWidth < 600) {
