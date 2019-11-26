@@ -28,8 +28,8 @@ class Map extends Component {
 
     componentDidUpdate(prevProps) {
         if (
-            !prevProps.pointsData !== this.props.pointsData &&
-            !prevProps.contursData !== this.props.contursData &&
+            !prevProps.pointsData != this.props.pointsData &&
+            !prevProps.contursData != this.props.contursData &&
             !this.initialized
         ) {
             this.initMap();
@@ -55,13 +55,22 @@ class Map extends Component {
             return;
         }
         const geojsonPoints = this.props.pointsData;
-        const geojsonConturs = this.props.contursData;
+        const geojsonConturs = this.props.contursData; //наверное иы контуры не будем показывать
 
         if (!geojsonPoints || !geojsonConturs) {
             return;
         }
 
-        this.map.on('load', () => {
+        if (this.map.loaded()) { //https://github.com/mapbox/mapbox-gl-js/issues/6707#issue-325222553
+            this.processDrawing()
+        } else {
+            this.map.on('load', () => this.processDrawing())
+        }
+
+    }
+    processDrawing () {
+        const geojsonPoints = this.props.pointsData;
+
             // Add the data to your map as a layer
             this.map.addLayer({
                 id: 'locations',
@@ -103,7 +112,6 @@ class Map extends Component {
                     'visibility': 'visible'
                 }
             });
-        });
 
         this.map.on('click', 'locations', (e) => {
             const currentFeature = e.features[0];
@@ -119,7 +127,7 @@ class Map extends Component {
             this.props.onHighlightedCafeChange(null);
         });
 
-        this.map.on('load', () => {
+        /*this.map.on('load', () => {         // хороплет
             this.map.addSource('cafeRating', {
                 'type': 'geojson',
                 'data': geojsonConturs
@@ -136,7 +144,7 @@ class Map extends Component {
                     'fill-outline-color': '#000'
                 }
             }, 'waterway-label');
-        });
+        });*/
         /*this.map.on('click', 'cafeRating', (e) => {
             const coordinates = e.features[0].geometry.coordinates[0]
             const bounds = coordinates.reduce(function (bounds, coord) {
@@ -155,6 +163,7 @@ class Map extends Component {
 
         this.initialized = true;
     }
+
 
     //Change language of label layers
     translateMap () {
