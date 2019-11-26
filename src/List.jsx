@@ -15,18 +15,6 @@ class List extends Component {
         linesOfList: [],
         clicked: false
     };
-    componentDidMount() {
-        //TODO:LEGEND
-        /*let c = document.getElementById("myCanvas");
-        let ctx = c.getContext("2d");
-
-        let grd = ctx.createLinearGradient(0, 0, 200, 0);
-        grd.addColorStop(0, "red");
-        grd.addColorStop(1, "white");
-
-        ctx.fillStyle = grd;
-        ctx.fillRect(10, 10, 150, 80);*/
-    }
 
     componentDidUpdate(prevProps) {
         const {rawPoints} = this.props;
@@ -47,7 +35,7 @@ class List extends Component {
 
     getLinesByFilters = () => {
         const {rawPoints} = this.props;
-        const searchedText = this.state.searchText.toLowerCase();
+        const searchedText = this.state.searchText.toLowerCase().replace('ё','е');
         const {isEcoChecked, isOpenNowChecked} = this.state;
 
         const today = new Date();
@@ -59,8 +47,8 @@ class List extends Component {
             .filter(({geometry, properties}) => {
                 // Потом по тексту, если что-то введено в поиск
                 if (searchedText) {
-                    const cafeName = properties.title.toLowerCase();
-                    const cafeDesc = properties.description.toLowerCase();
+                    const cafeName = properties.title.toLowerCase().replace('ё','е');
+                    const cafeDesc = properties.description.toLowerCase().replace('ё','е');
                     if (!cafeName.includes(searchedText) && !cafeDesc.includes(searchedText)) {
                         return false;
                     }
