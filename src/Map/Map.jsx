@@ -57,15 +57,15 @@ class Map extends Component {
         let theMarker = this.theMarker
         if (prevProps.activePoint !== this.props.activePoint){
 
-            if (prevProps.activePoint) {
-
+            if (prevProps.activePoint && this.props.activePoint) {
                 theMarker.remove()
-
                 theMarker.setLngLat(this.props.activePoint.geometry.coordinates)
                 theMarker.addTo(this.map)
             }
-        else
-            theMarker.setLngLat(this.props.activePoint.geometry.coordinates).addTo(this.map)
+            else if (prevProps.activePoint)
+                theMarker.remove()
+            else
+                theMarker.setLngLat(this.props.activePoint.geometry.coordinates).addTo(this.map)
         }
     }
 
