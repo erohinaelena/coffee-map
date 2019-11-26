@@ -51,7 +51,10 @@ class CafeCard extends Component {
 
         return ReactDOM.createPortal(
             <div className="cafeCard cafeCard-absolute" style={{'background':info.color}}>
-                <div className='cafeCard--header'>{info.title}</div>
+                <div className='cafeCard--header'>
+                    {info.title}
+                    {info.eco ? '\u00A0🌱' : null}
+                </div>
                 <div className='cafeCard--closeBtn' onClick = {this.handleClose}><img src={closeBtn} width="19" height="18" /></div>
 
                 <div className='cafeCard--content'>

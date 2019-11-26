@@ -66,6 +66,12 @@ class List extends Component {
                     }
                 }
                 // + должна быть проверка на эко-френдли
+                if (isEcoChecked){
+                    const eco = properties.eco;
+                    if (!eco){
+                        return false;
+                    }
+                }
                 return true;
             })
             .sort((a,b) => b.properties.rating - a.properties.rating);
@@ -190,7 +196,10 @@ class List extends Component {
                                         onMouseLeave={() =>  this.props.onHighlightedCafeChange(null)}
                                     >
 
-                                        <div className='cafeCard--header'>{number.properties.title}</div>
+                                        <div className='cafeCard--header'>
+                                            {number.properties.title}
+                                            {number.properties.eco ? '\u00A0🌱' : null}
+                                        </div>
                                         <div className='cafeCard--content'>
                                             {number.properties.rating ?
                                                 <div className='cafeCard--rating'>
