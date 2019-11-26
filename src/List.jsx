@@ -10,6 +10,8 @@ class List extends Component {
         searchText: '',
         isEcoChecked: false,
         isOpenNowChecked: false,
+        linesByFilters: null,
+        linesByMap: null,
         linesOfList: [],
         clicked: false
     };
@@ -27,20 +29,24 @@ class List extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (
-            !lodash.isEqual(this.props.mapBounds, prevProps.mapBounds) ||
-            !prevProps.rawPoints && this.props.rawPoints
-        ) {
-            this.updateLinesOfList();
+        const {rawPoints} = this.props;
+        if (rawPoints && rawPoints.data && rawPoints.data.features && !this.state.linesByFilters) {
+            this.setState({
+                linesByFilters: rawPoints.data.features,
+                linesByMap: rawPoints.data.features,
+                linesOfList: rawPoints.data.features
+            }, this.updateLinesByMap);
         }
-        else('nothing to update')
-
+        if (
+            this.state.linesByFilters &&
+            !lodash.isEqual(this.props.mapBounds, prevProps.mapBounds)
+        ) {
+            this.updateLinesByMap();
+        }
     }
 
-    getLinesOfList() {
-        const {rawPoints, mapBounds} = this.props;
-        const sw = mapBounds.getSouthWest();
-        const ne = mapBounds.getNorthEast();
+    getLinesByFilters = () => {
+        const {rawPoints} = this.props;
         const searchedText = this.state.searchText.toLowerCase();
         const {isEcoChecked, isOpenNowChecked} = this.state;
 
@@ -51,11 +57,6 @@ class List extends Component {
 
         return (rawPoints && rawPoints.data && rawPoints.data.features || [])
             .filter(({geometry, properties}) => {
-                // Фильтруем по видимой области
-                const [lng, lat] = geometry.coordinates;
-                if (!(sw.lng < lng && lng < ne.lng && sw.lat < lat && lat < ne.lat)){
-                    return false;
-                }
                 // Потом по тексту, если что-то введено в поиск
                 if (searchedText) {
                     const cafeName = properties.title.toLowerCase();
@@ -80,33 +81,73 @@ class List extends Component {
                 return true;
             })
             .sort((a,b) => b.properties.rating - a.properties.rating);
-    }
+    };
+
+    getLinesByMap = () => {
+        const {rawPoints, mapBounds} = this.props;
+        const sw = mapBounds.getSouthWest();
+        const ne = mapBounds.getNorthEast();
+
+        return (rawPoints && rawPoints.data && rawPoints.data.features || [])
+            .filter(({geometry, properties}) => {
+                // Фильтруем по видимой области
+                const [lng, lat] = geometry.coordinates;
+                if (!(sw.lng < lng && lng < ne.lng && sw.lat < lat && lat < ne.lat)){
+                    return false;
+                }
+                return true;
+            })
+            .sort((a,b) => b.properties.rating - a.properties.rating);
+    };
+
+    updateLinesByFilters = () => {
+        const linesByFilters = this.getLinesByFilters();
+        this.setState(
+            {linesByFilters},
+            this.updateLinesOfList
+        );
+
+        this.props.onFilteredItemsChange(linesByFilters)
+    };
+
+    updateLinesByMap = () => {
+        const linesByMap = this.getLinesByMap();
+        this.setState(
+            {linesByMap},
+            this.updateLinesOfList
+        );
+    };
 
     updateLinesOfList () {
-        const linesOfList = this.getLinesOfList();
-        this.setState({linesOfList});
-        this.props.onFilteredItemsChange(linesOfList)
+        const {linesByFilters, linesByMap} = this.state;
+        this.setState({
+            linesOfList: lodash.intersectionBy(
+                linesByFilters, linesByMap, (a) => a.properties.id
+            ).sort(
+                (a, b) => b.properties.rating - a.properties.rating
+            )
+        });
     }
 
     onSearchTextChange = (e) => {
         const searchText = e.target.value;
         this.setState(
             {searchText},
-            this.updateLinesOfList
+            this.updateLinesByFilters
         )
     };
 
     onEcoFilterToggle = () => {
         this.setState(
             ({isEcoChecked}) => ({isEcoChecked: !isEcoChecked}),
-            this.updateLinesOfList
+            this.updateLinesByFilters
         );
     };
 
     onOpenNowFilterToggle = () => {
         this.setState(
             ({isOpenNowChecked}) => ({isOpenNowChecked: !isOpenNowChecked}),
-            this.updateLinesOfList
+            this.updateLinesByFilters
         );
     };
 
