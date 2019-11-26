@@ -24,6 +24,10 @@ class Map extends Component {
         this.props.updateBounds(this.map.getBounds());
         this.initialized = false;
         this.initMap();
+        const markerEl = document.createElement('div');
+        markerEl.className = 'marker';
+
+        this.theMarker = new mapboxgl.Marker(markerEl);
     }
 
     componentDidUpdate(prevProps) {
@@ -48,6 +52,21 @@ class Map extends Component {
             this.map.setFilter('locations', filter);
             this.map.setFilter('locations-text', filter);
         }
+
+
+        let theMarker = this.theMarker
+        if (prevProps.activePoint !== this.props.activePoint){
+
+            if (prevProps.activePoint) {
+
+                theMarker.remove()
+
+                theMarker.setLngLat(this.props.activePoint.geometry.coordinates)
+                theMarker.addTo(this.map)
+            }
+        else
+            theMarker.setLngLat(this.props.activePoint.geometry.coordinates).addTo(this.map)
+        }
     }
 
     initMap () {
@@ -62,13 +81,18 @@ class Map extends Component {
         }
 
         if (this.map.loaded()) { //https://github.com/mapbox/mapbox-gl-js/issues/6707#issue-325222553
+            //debugger
             this.processDrawing()
         } else {
+            //debugger
             this.map.on('load', () => this.processDrawing())
         }
 
     }
     processDrawing () {
+        if (this.initialized) {
+            return;
+        }
         const geojsonPoints = this.props.pointsData;
 
             // Add the data to your map as a layer

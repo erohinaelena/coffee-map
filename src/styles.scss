@@ -382,3 +382,22 @@ canvas#legend{
     }
 
 }
+
+.marker {
+    width:16px;
+    height:16px;
+    border-radius:50%;
+    box-shadow:0 0 2px rgba(0,0,0,0.25);
+    border:2px solid #000;
+    cursor:pointer;
+    animation: shadow-pulse 1s infinite;
+}
+@keyframes shadow-pulse
+{
+    0% {
+        box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.2);
+    }
+    100% {
+        box-shadow: 0 0 0 35px rgba(0, 0, 0, 0);
+    }
+}

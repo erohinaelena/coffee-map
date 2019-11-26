@@ -117,6 +117,7 @@ class MapContainer extends Component {
                 <Map pointsData={this.state.points}
                      contursData={this.state.conturs}
                      selectedPoint={this.selectedPointHandler}
+                     activePoint={this.state.currentItem}
                      filteredItemsList={this.state.filteredItems}
                      zoomValue={this.zoomValueHandler}
                      updateBounds={this.onBoundsUpdate}
