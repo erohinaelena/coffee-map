@@ -169,7 +169,7 @@ function makeGeoJSON(data) {
                 id: i,
                 rawId: d['Id карточки'],
                 title: d['Наименование организации'],
-                description: d['Улица'] + ', ' + d['Номер дома'],
+                description: d['Улица'] + ', ' + d['Номер дома'] + (d['Этаж'] ? ', ' + d['Этаж'] + '\u00A0этаж' : ''),
                 rating: rating,
                 color: (rating) ? getColorMagma(rating) : 'gray',
                 workTime: parseWorkTime(d['Время работы']),
