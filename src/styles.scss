@@ -262,6 +262,10 @@ canvas#legend{
         &.__checked {
             background: #D0CDC6;
             color: #020108;
+            &:hover {
+                background: white;
+                color: #020108;
+            }
         }
         &:hover{
             background: rgba(196, 196, 196, 0.6);
