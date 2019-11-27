@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import Search from './Filters/Search.jsx'
 import FilterEcoFriendly from './Filters/FilterEcoFriendly.jsx'
 import FilterOpenNow from './Filters/FilterOpenNow.jsx'
-import Eco from './Eco'
 import lodash from 'lodash';
+import ListItem from './ListItem'
 
 class List extends Component {
     state = {
@@ -14,7 +14,7 @@ class List extends Component {
         linesByFilters: null,
         linesByMap: null,
         linesOfList: [],
-        clicked: false
+        activeItem: null
     };
 
     componentDidUpdate(prevProps) {
@@ -147,7 +147,16 @@ class List extends Component {
     };
 
     handleClick = (number) => {
+        this.setState({activeItem: number.properties.id})
         this.props.currentItem(number)
+    };
+
+    handleMouseOver = (number) => {
+        this.props.onHighlightedCafeChange(number.properties.id)
+    };
+
+    handleMouseLeave = () => {
+        this.props.onHighlightedCafeChange(null)
     };
 
     toggleHover = () =>{
@@ -164,8 +173,7 @@ class List extends Component {
 
         return ReactDOM.createPortal(
             <div className={'sidebar'}>
-                {this.state.clicked ?
-                    '1':
+
                     <div className={'sidebar'}>
 
                         <div className={'filters'}>
@@ -183,40 +191,21 @@ class List extends Component {
                         </div>
                         <ul className={'scrollable'}>
                             {linesOfList.map((number, i) => {
-                                    const style = {
-                                        color: `${number.properties.color}`,
-                                        '--border-color':`${number.properties.color}`
-                                    };
-                                    return <li
-                                        style={style}
-                                        className={'listItem cafeCard'}
+
+                                    return <ListItem
+                                        content={number}
                                         key={i}
-                                        id={`cafeListItem_${number.properties.id}`}
-                                        onClick={() => this.handleClick(number)}
-                                        onMouseOver={() => this.props.onHighlightedCafeChange(number.properties.id)}
-                                        onMouseLeave={() =>  this.props.onHighlightedCafeChange(null)}
-                                    >
-
-                                        <div className='cafeCard--header'>
-                                            {number.properties.title}
-                                            {number.properties.eco ? <Eco /> : null}
-                                        </div>
-                                        <div className='cafeCard--content'>
-                                            {number.properties.rating ?
-                                                <div className='cafeCard--rating'>
-                                                    {number.properties.rating}
-                                                </div> : null}
-                                            <div className='cafeCard--address'>
-                                                {number.properties.description}
-                                            </div>
-                                        </div>
-
-                                    </li>
+                                        activeItem={this.state.activeItem}
+                                        isCardClosed = {this.props.isCardClosed}
+                                        onClick={this.handleClick.bind(this, number)}
+                                        onMouseOver={this.handleMouseOver.bind(this, number)}
+                                        onMouseLeave={this.handleMouseLeave.bind(this, null)}
+                                    />
                                 }
                             )}
                         </ul>
                     </div>
-                }
+
 
             </div>,
             document.getElementById('cafeList')

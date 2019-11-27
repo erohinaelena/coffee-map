@@ -35,7 +35,8 @@ class MapContainer extends Component {
         rawData:[],
         rawDataMap:[],
         zoomValue: 9.7,
-        mapBounds: null
+        mapBounds: null,
+        isCardClosed:true
     };
 
     async componentDidMount() {
@@ -68,7 +69,7 @@ class MapContainer extends Component {
     };
 
     currentItemHandler = (value) => {
-        this.setState({currentItem: value})
+        this.setState({currentItem: value, isCardClosed: false})
     };
 
     filteredItemsHandler = (list) => {
@@ -76,7 +77,7 @@ class MapContainer extends Component {
     };
 
     handleClose = () => {
-        this.setState({currentItem: null});
+        this.setState({currentItem: null, isCardClosed: true});
         //this.searchHandler("")
     };
 
@@ -112,6 +113,7 @@ class MapContainer extends Component {
                       onFilteredItemsChange={this.filteredItemsHandler}
                       onHighlightedCafeChange={this.onHighlightedCafeChange}
                       mapBounds={this.state.mapBounds}
+                      isCardClosed = {this.state.isCardClosed}
                 />
 
                 <Map pointsData={this.state.points}
