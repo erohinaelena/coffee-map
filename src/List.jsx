@@ -145,6 +145,14 @@ class List extends Component {
         );
     };
 
+    resetFilters = () => {
+        this.setState({
+            isOpenNowChecked: false,
+            isEcoChecked: false,
+            searchText: ''
+        }, this.updateLinesByFilters)
+    };
+
     handleClick = (number) => {
         this.props.currentItem(number)
     };
@@ -158,11 +166,35 @@ class List extends Component {
         const {
             linesOfList,
             isEcoChecked,
-            isOpenNowChecked
+            isOpenNowChecked,
+            searchText
         } = this.state;
+        const {isZoomed} = this.props;
+        const filtersToggled = isEcoChecked || isOpenNowChecked || searchText;
+        const needResetFilters =
+            linesOfList.length === 0 &&
+            (filtersToggled || isZoomed);
 
         return ReactDOM.createPortal(
             <div className={'sidebar'}>
+                {needResetFilters && (
+                    <div className={'resetPopupContainer'}>
+                        <div className={'resetPopup'}>
+                            <div className={'resetPopup_title'}>{'Ничего не нашлось'}</div>
+                            {`В этом месте нет 
+                            ${isEcoChecked ? 'эко-кафе' : 'кафе'} 
+                            ${isEcoChecked && searchText.length > 0 ? ',' : ''}
+                            ${searchText.length > 0 ? ` c "${searchText}" в названии или адресе` : ''}. `}
+                            {isOpenNowChecked ? 'По крайней мере таких, которые открыты прямо сейчас.' : '' }
+                            <br/>
+                            <br/>
+                            {'Попробуйте '}
+                            {isZoomed && (<button onClick={this.props.resetZoomValue}>{'искать по всей Москве'}</button>)}
+                            {isZoomed && filtersToggled ? ' или ' : ''}
+                            {filtersToggled && (<button onClick={this.resetFilters}>{'сбросить фильтры'}</button>)}
+                        </div>
+                    </div>
+                )}
                 {this.state.clicked ?
                     '1':
                     <div className={'sidebar'}>
@@ -170,6 +202,7 @@ class List extends Component {
                         <div className={'filters'}>
                             <Search
                                 onSearchTextChange={this.onSearchTextChange}
+                                text={searchText}
                             />
                             <FilterOpenNow
                                 isChecked={isOpenNowChecked}

@@ -278,59 +278,6 @@ canvas#legend{
     .searchbar{
         margin-bottom: 12px;
     }
-
-    .filterAverageCheck__slider {
-        position: relative;
-        height: 30px;
-    }
-
-    .filterAverageCheck__from,
-    .filterAverageCheck__to {
-        position: absolute;
-        top: 50%;
-    }
-
-    .noUi-target {
-        box-shadow: none;
-        background: none;
-        height: 0;
-        top: 50%;
-    }
-
-    .noUi-handle {
-        top: -3px !important;
-        right: -3px !important;
-        width: 6px !important;
-        height: 6px !important;
-        cursor: pointer;
-        background: black;
-        border-radius: 10px;
-        box-shadow: none;
-
-        &::before {
-            top: -4px;
-            left: -4px;
-            width: 12px !important;
-            height: 12px !important;
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 20px;
-        }
-
-        &::after {
-            display: none;
-        }
-
-        &:focus {
-            outline: none;
-        }
-    }
-
-    .noUi-connects,
-    .noUi-connect,
-    .noUi-pips,
-    .noUi-marker {
-        display: none;
-    }
 }
 .scrollable {
     display: flex;
@@ -400,4 +347,38 @@ canvas#legend{
     100% {
         box-shadow: 0 0 0 35px rgba(0, 0, 0, 0);
     }
+}
+
+.resetPopupContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.resetPopup {
+    background: #fff;
+    padding: 24px 16px;
+    color: #000;
+    border-radius: 10px;
+    width: 400px;
+    font-size: 12px;
+    pointer-events: auto;
+
+    button {
+        border: 1px solid #000;
+        border-radius: 10px;
+    }
+}
+
+.resetPopup_title {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 8px;
 }

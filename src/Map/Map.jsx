@@ -15,7 +15,7 @@ class Map extends Component {
             style: 'mapbox://styles/mapbox/light-v9',
             center: [37.623597, 55.751583],
             minZoom: 9,
-            zoom:9.7,
+            zoom: 9.7,
             maxBounds: bounds,
             //doubleClickZoom: false,
         });
@@ -66,6 +66,13 @@ class Map extends Component {
                 theMarker.remove()
             else
                 theMarker.setLngLat(this.props.activePoint.geometry.coordinates).addTo(this.map)
+        }
+
+        if (
+            this.props.zoomValue !== prevProps.zoomValue &&
+            this.props.zoomValue !== this.map.getZoom()
+        ) {
+            this.map.zoomTo(this.props.zoomValue, {center: [37.623597, 55.751583]})
         }
     }
 
@@ -181,7 +188,7 @@ class Map extends Component {
         });*/
 
         this.map.on('moveend', () => {
-            this.props.zoomValue(this.map.getZoom());
+            this.props.onZoomValueChange(this.map.getZoom());
             this.props.updateBounds(this.map.getBounds());
         });
 
