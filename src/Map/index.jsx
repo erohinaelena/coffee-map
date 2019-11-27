@@ -165,7 +165,7 @@ function makeGeoJSON(data) {
             type: 'Feature',
             geometry: {
                 type: 'Point',
-                coordinates: [+d['Longitude'], +d['Latitude']]
+                coordinates: d['Слиплось'] ? [+d['LongitudeRand'], +d['LatitudeRand']] : [+d['Longitude'], +d['Latitude']]
             },
             properties: {
                 id: i,
@@ -175,7 +175,7 @@ function makeGeoJSON(data) {
                 rating: rating,
                 color: (rating) ? getColorMagma(rating) : 'gray',
                 workTime: parseWorkTime(d['Время работы']),
-                eco: +d['eco'],
+                eco: d['eco_info'] ? 1 : 0,
             }
         }
         }
