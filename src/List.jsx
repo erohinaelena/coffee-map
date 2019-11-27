@@ -192,11 +192,8 @@ class List extends Component {
                     <div className={'resetPopupContainer'}>
                         <div className={'resetPopup'}>
                             <div className={'resetPopup_title'}>{'Ничего не нашлось'}</div>
-                            {`В этом месте нет 
-                            ${isEcoChecked ? 'эко-кафе' : 'кафе'} 
-                            ${isEcoChecked && searchText.length > 0 ? ',' : ''}
-                            ${searchText.length > 0 ? ` c "${searchText}" в названии или адресе` : ''}. `}
-                            {isOpenNowChecked ? 'По крайней мере таких, которые открыты прямо сейчас.' : '' }
+                            {`В этом месте нет ${isEcoChecked ? 'эко-кафе' : 'кафе'}${isEcoChecked && searchText.length > 0 ? ',' : ''}${searchText.length > 0 ? ` c "${searchText}" в названии или адресе.` : '.'}`}
+                            {isOpenNowChecked ? ' По крайней мере таких, которые открыты прямо сейчас.' : '' }
                             <br/>
                             <br/>
                             {'Попробуйте '}
