@@ -182,6 +182,7 @@ class List extends Component {
         const {isZoomed} = this.props;
         const filtersToggled = isEcoChecked || isOpenNowChecked || searchText;
         const needResetFilters =
+            this.state.linesByFilters !== null &&
             linesOfList.length === 0 &&
             (filtersToggled || isZoomed);
 
