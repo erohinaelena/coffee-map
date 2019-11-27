@@ -23,7 +23,8 @@ const isMobile = () => {
     return (/Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone/i).test(userAgent);
 };
 const IS_MOBILE = isMobile();
-
+const DEFAULT_ZOOM = 9.7;
+const MIN_ZOOM = 9;
 
 class MapContainer extends Component {
     state = {
@@ -34,7 +35,7 @@ class MapContainer extends Component {
         filteredItems: [],
         rawData:[],
         rawDataMap:[],
-        zoomValue: 9.7,
+        zoomValue: DEFAULT_ZOOM,
         mapBounds: null,
         isCardClosed:true
     };
@@ -85,6 +86,10 @@ class MapContainer extends Component {
         this.setState({zoomValue: value});
     };
 
+    resetZoomValue = () => {
+        this.setState({zoomValue: MIN_ZOOM});
+    };
+
     onHighlightedCafeChange = (highlightedItemId) => {
         this.setState({highlightedItemId});
     };
@@ -113,6 +118,8 @@ class MapContainer extends Component {
                       onFilteredItemsChange={this.filteredItemsHandler}
                       onHighlightedCafeChange={this.onHighlightedCafeChange}
                       mapBounds={this.state.mapBounds}
+                      resetZoomValue={this.resetZoomValue}
+                      isZoomed={this.state.zoomValue > MIN_ZOOM}
                       isCardClosed = {this.state.isCardClosed}
                 />
 
@@ -121,7 +128,8 @@ class MapContainer extends Component {
                      selectedPoint={this.selectedPointHandler}
                      activePoint={this.state.currentItem}
                      filteredItemsList={this.state.filteredItems}
-                     zoomValue={this.zoomValueHandler}
+                     onZoomValueChange={this.zoomValueHandler}
+                     zoomValue={this.state.zoomValue}
                      updateBounds={this.onBoundsUpdate}
                      onHighlightedCafeChange={this.onHighlightedCafeChange}
                 />
