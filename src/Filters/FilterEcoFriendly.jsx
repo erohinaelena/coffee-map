@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import Eco from "../Eco";
 
 const FilterEcoFriendly = ({isChecked, onToggle}) => (
 	<div
@@ -11,7 +12,7 @@ const FilterEcoFriendly = ({isChecked, onToggle}) => (
 		)}
 		onClick={onToggle}
 	>
-		{'Эко 🌱'}
+		{'Эко'}<Eco />
 	</div>
 );
 

@@ -9,6 +9,7 @@
     "d3": "^5.14.2",
     "d3-array": "^2.4.0",
     "d3-collection": "^1.0.7",
+    "d3-color": "^1.4.0",
     "d3-dsv": "^1.1.1",
     "d3-fetch": "^1.1.2",
     "d3-scale": "^3.2.0",
@@ -27,7 +28,8 @@
     "@babel/preset-react": "^7.7.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
-    "parcel-bundler": "^1.12.4"
+    "parcel-bundler": "^1.12.4",
+    "parcel-plugin-bundle-visualiser": "^1.2.0"
   },
   "scripts": {
     "start": "parcel ./src/index.html",

@@ -36,7 +36,8 @@ class MapContainer extends Component {
         rawData:[],
         rawDataMap:[],
         zoomValue: DEFAULT_ZOOM,
-        mapBounds: null
+        mapBounds: null,
+        isCardClosed:true
     };
 
     async componentDidMount() {
@@ -69,7 +70,7 @@ class MapContainer extends Component {
     };
 
     currentItemHandler = (value) => {
-        this.setState({currentItem: value})
+        this.setState({currentItem: value, isCardClosed: false})
     };
 
     filteredItemsHandler = (list) => {
@@ -77,7 +78,7 @@ class MapContainer extends Component {
     };
 
     handleClose = () => {
-        this.setState({currentItem: null});
+        this.setState({currentItem: null, isCardClosed: true});
         //this.searchHandler("")
     };
 
@@ -119,6 +120,7 @@ class MapContainer extends Component {
                       mapBounds={this.state.mapBounds}
                       resetZoomValue={this.resetZoomValue}
                       isZoomed={this.state.zoomValue > MIN_ZOOM}
+                      isCardClosed = {this.state.isCardClosed}
                 />
 
                 <Map pointsData={this.state.points}
@@ -177,7 +179,7 @@ function makeGeoJSON(data) {
                 id: i,
                 rawId: d['Id карточки'],
                 title: d['Наименование организации'],
-                description: d['Улица'] + ', ' + d['Номер дома'],
+                description: d['Улица'] + ', ' + d['Номер дома'] + (d['Этаж'] ? ', ' + d['Этаж'] + '\u00A0этаж' : ''),
                 rating: rating,
                 color: (rating) ? getColorMagma(rating) : 'gray',
                 workTime: parseWorkTime(d['Время работы']),

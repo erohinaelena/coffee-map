@@ -4,7 +4,8 @@ import closeBtn from './img/close.svg'
 import instBtn from './img/insta.svg'
 import lodash, {isEqual} from 'lodash';
 import {nest} from 'd3-collection';
-import {mean} from "d3-array";
+import {color} from "d3-color";
+import Eco from "./Eco";
 
 class CafeCard extends Component {
     constructor(props) {
@@ -50,10 +51,12 @@ class CafeCard extends Component {
             .entries(shedule);
 
         return ReactDOM.createPortal(
-            <div className="cafeCard cafeCard-absolute" style={{'background':info.color}}>
+            <div className="cafeCard cafeCard-absolute"
+                 style={{'background':info.color,
+                            '--bg-color': `rgba(${color(info.color).r},${color(info.color).g},${color(info.color).b},0.4)`}}>
                 <div className='cafeCard--header'>
                     {info.title}
-                    {info.eco ? '\u00A0🌱' : null}
+                    {info.eco ? <Eco /> : null}
                 </div>
                 <div className='cafeCard--closeBtn' onClick = {this.handleClose}><img src={closeBtn} width="19" height="18" /></div>
 
