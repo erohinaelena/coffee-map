@@ -89,7 +89,6 @@ body {
 
 .cafeCard{
     padding: 22px 17px 7px;
-    margin-top: 2px;
 
     &-absolute{
         position: relative;
@@ -98,7 +97,7 @@ body {
         right:0;
         background: #CE556A;
         border-radius: 6px 6px 0 0;
-        box-shadow: 0px -4px 16px rgba(206, 85, 106, 0.4);
+        box-shadow: 0px -4px 16px var(--bg-color);
         color:black;
         min-height:100px;
 
@@ -343,7 +342,7 @@ canvas#legend{
         box-sizing: border-box;
         border-radius: 8px;
         &:hover{
-            border: 1px solid var(--mywar);
+            border: 1px solid var(--border-color);
         }
     }
 }

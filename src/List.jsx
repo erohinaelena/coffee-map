@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Search from './Filters/Search.jsx'
 import FilterEcoFriendly from './Filters/FilterEcoFriendly.jsx'
 import FilterOpenNow from './Filters/FilterOpenNow.jsx'
+import Eco from './Eco'
 import lodash from 'lodash';
 
 class List extends Component {
@@ -184,7 +185,7 @@ class List extends Component {
                             {linesOfList.map((number, i) => {
                                     const style = {
                                         color: `${number.properties.color}`,
-                                        '--mywar':`${number.properties.color}`
+                                        '--border-color':`${number.properties.color}`
                                     };
                                     return <li
                                         style={style}
@@ -198,7 +199,7 @@ class List extends Component {
 
                                         <div className='cafeCard--header'>
                                             {number.properties.title}
-                                            {number.properties.eco ? '\u00A0🌱' : null}
+                                            {number.properties.eco ? <Eco /> : null}
                                         </div>
                                         <div className='cafeCard--content'>
                                             {number.properties.rating ?
