@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import ReactDOM from "react-dom";
 import closeBtn from './img/close.svg'
 import instBtn from './img/insta.svg'
+import vkBtn from './img/vk.svg'
 import lodash, {isEqual} from 'lodash';
 import {nest} from 'd3-collection';
 import {color} from "d3-color";
@@ -86,19 +87,27 @@ class CafeCard extends Component {
 
                     {fullInfo['Сайты'] ?
                         <a className='cafeCard--content--website'
-                            href={addHttp(fullInfo['Сайты'].match(/.*|/))}
+                            href={addHttp(fullInfo['Сайты'].match(/.+?(?=\||\z)/))}
                             target='_blank'>
                             Перейти на сайт
                          </a>
                         :null}
 
-                    {fullInfo['Сайты']?
+                    {fullInfo['inst']?
                         <a className='cafeCard--content--insta'
-                           href={addHttp(fullInfo['Сайты'].match(/.*|/))}
+                           href={addHttp(fullInfo['inst'])}
                            target='_blank'>
                             <img alt='Go to Instagram' src={instBtn} width='14' height='15' />
                         </a>
                     :null}
+
+                    {fullInfo['vk']?
+                        <a className='cafeCard--content--insta'
+                           href={addHttp(fullInfo['vk'])}
+                           target='_blank'>
+                            <img alt='Go to VK' src={vkBtn} width='18' height='10' />
+                        </a>
+                        :null}
 
                 </div>
 
