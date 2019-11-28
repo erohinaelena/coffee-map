@@ -32,6 +32,7 @@ class List extends Component {
         ) {
             this.updateLinesByMap();
         }
+
     }
 
     getLinesByFilters = () => {
@@ -225,8 +226,8 @@ class List extends Component {
                                     return <ListItem
                                         content={number}
                                         key={i}
-                                        activeItem={this.state.activeItem}
-                                        isCardClosed = {this.props.isCardClosed}
+                                        activeItem={  (this.props.activeItem ? this.props.activeItem.properties.id : null) || this.state.activeItem}
+                                        isCardClosed = {(this.props.activeItem ? false : true) && this.props.isCardClosed}
                                         onClick={this.handleClick.bind(this, number)}
                                         onMouseOver={this.handleMouseOver.bind(this, number)}
                                         onMouseLeave={this.handleMouseLeave.bind(this, null)}

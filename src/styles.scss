@@ -287,7 +287,8 @@ canvas#legend{
     flex-direction: column;
 
     .listItem {
-        padding: 13px 3px 11px 11px;
+        padding: 11px 3px 9px 11px;
+        margin-bottom: 4px;
         cursor: pointer;
         border: 1px solid black;
         box-sizing: border-box;

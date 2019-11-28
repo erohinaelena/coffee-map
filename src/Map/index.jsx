@@ -9,7 +9,6 @@ import List from '../List';
 import data from '../data/data_test.csv'
 import moscow from '../data/mo.geojson'
 import CafeCard from "../CafeCard";
-import BarCharts from "../BarCharts";
 import ConnectingLineLayer from '../ConnectingLineLayer';
 import Legend from "../Legend";
 
@@ -65,7 +64,6 @@ class MapContainer extends Component {
     }
 
     selectedPointHandler = (value) => {
-        debugger
         this.setState({currentItem: value})
     };
 
@@ -109,10 +107,6 @@ class MapContainer extends Component {
                               closeCard = {() => this.handleClose()}
                     /> : null}
 
-                {this.state.zoomValue < 8 ?
-                    <BarCharts
-                    /> : null}
-
                 <List rawPoints={this.state.points}
                       currentItem={this.currentItemHandler} // to open card
                       onFilteredItemsChange={this.filteredItemsHandler}
@@ -121,6 +115,7 @@ class MapContainer extends Component {
                       resetZoomValue={this.resetZoomValue}
                       isZoomed={this.state.zoomValue > MIN_ZOOM}
                       isCardClosed = {this.state.isCardClosed}
+                      activeItem = {this.state.currentItem}
                 />
 
                 <Map pointsData={this.state.points}
