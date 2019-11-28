@@ -89,6 +89,13 @@ body {
 
 .cafeCard{
     padding: 22px 17px 7px;
+    ::-webkit-scrollbar-track {
+        background: var(--bg-color);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: rgba(2, 1, 7,0.2);
+    }
 
     &-absolute{
         position: relative;
@@ -198,6 +205,14 @@ body {
             &:hover{
                 opacity: 0.8;
             }
+        }
+
+        &--remote{
+            overflow-y: auto;
+            max-height: 5.5em;
+            margin-right: -18px;
+            margin-top: 0.5em;
+            padding-right: 18px;
         }
     }
 }

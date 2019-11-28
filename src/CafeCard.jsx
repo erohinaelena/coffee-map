@@ -111,6 +111,12 @@ class CafeCard extends Component {
 
                 </div>
 
+                {fullInfo['remote'] ?
+                    <div className='cafeCard--content--remote'>
+                        {fullInfo['remote']}
+                    </div>
+                    : null}
+
                 <div>
                     {fullInfo['Способ оплаты']=='Наличный расчёт' ? 'Оплата только наличными' : null}
                 </div>
