@@ -88,13 +88,17 @@ body {
 }
 
 .cafeCard{
-    padding: 22px 17px 7px;
+    padding: 22px 17px 0px;
     ::-webkit-scrollbar-track {
         background: var(--bg-color);
     }
 
     ::-webkit-scrollbar-thumb {
         background-color: rgba(2, 1, 7,0.2);
+    }
+
+    &>:last-child{
+        padding-bottom: 24px;
     }
 
     &-absolute{
@@ -179,7 +183,14 @@ body {
         &--flex{
             display: flex;
             flex-direction: row;
-
+            align-items: baseline;
+            margin-top: 18px;
+            >a:hover{
+                opacity: 0.8;
+            }
+            :first-child{
+                margin-left: 0px;
+            }
         }
 
         &--phones{
@@ -194,17 +205,11 @@ body {
             border-radius: 999px;
             text-decoration:none;
             color: inherit;
-            &:hover{
-                opacity: 0.8;
-            }
         }
 
         &--insta{
             display: block;
             margin: 5px 10px;
-            &:hover{
-                opacity: 0.8;
-            }
         }
 
         &--remote{

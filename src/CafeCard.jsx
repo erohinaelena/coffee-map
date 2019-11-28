@@ -78,10 +78,12 @@ class CafeCard extends Component {
                         </div>
                     )}
                 </div>
-
-                <div className='cafeCard--content--phones'>
-                    {fullInfo['Телефоны']!="#ERROR!" ? fullInfo['Телефоны'] : null}
-                </div>
+                {fullInfo['Телефоны'] ?
+                    <div className='cafeCard--content--phones'>
+                        {fullInfo['Телефоны']!="#ERROR!" ? fullInfo['Телефоны'] : null}
+                    </div>
+                    : null
+                }
 
                 <div className='cafeCard--content--flex'>
 
@@ -91,23 +93,26 @@ class CafeCard extends Component {
                             target='_blank'>
                             Перейти на сайт
                          </a>
-                        :null}
+                        :null
+                    }
 
-                    {fullInfo['inst']?
+                    {fullInfo['inst'] ?
                         <a className='cafeCard--content--insta'
                            href={addHttp(fullInfo['inst'])}
                            target='_blank'>
                             <img alt='Go to Instagram' src={instBtn} width='14' height='15' />
                         </a>
-                    :null}
+                        :null
+                    }
 
-                    {fullInfo['vk']?
+                    {fullInfo['vk'] ?
                         <a className='cafeCard--content--insta'
                            href={addHttp(fullInfo['vk'])}
                            target='_blank'>
                             <img alt='Go to VK' src={vkBtn} width='18' height='10' />
                         </a>
-                        :null}
+                        :null
+                    }
 
                 </div>
 
@@ -115,11 +120,15 @@ class CafeCard extends Component {
                     <div className='cafeCard--content--remote'>
                         {fullInfo['remote']}
                     </div>
-                    : null}
+                    : null
+                }
 
-                <div>
-                    {fullInfo['Способ оплаты']=='Наличный расчёт' ? 'Оплата только наличными' : null}
-                </div>
+
+                {fullInfo['Способ оплаты']=='Наличный расчёт' ?
+                    <div>Оплата только наличными</div>
+                    : null
+                }
+
 
             </div>,
         document.getElementById('cafeCard'));
