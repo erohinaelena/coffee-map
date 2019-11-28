@@ -19,7 +19,7 @@ class ListItem extends Component {
             >
                 <div className='cafeCard--header'>
                     {item.properties.title}
-                    {item.properties.eco ? <Eco /> : null}
+                    {item.properties.eco ? <Eco content={item.properties.eco}/> : null}
                 </div>
                 <div className='cafeCard--content'>
                     {item.properties.rating ?

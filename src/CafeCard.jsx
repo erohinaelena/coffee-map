@@ -57,7 +57,7 @@ class CafeCard extends Component {
                             '--bg-color': `rgba(${color(info.color).r},${color(info.color).g},${color(info.color).b},0.4)`}}>
                 <div className='cafeCard--header'>
                     {info.title}
-                    {info.eco ? <Eco /> : null}
+                    {info.eco ? <Eco content={info.eco}/> : null}
                 </div>
                 <div className='cafeCard--closeBtn' onClick = {this.handleClose}><img src={closeBtn} width="19" height="18" /></div>
 
@@ -84,50 +84,55 @@ class CafeCard extends Component {
                     </div>
                     : null
                 }
+                {fullInfo['Сайты'] || fullInfo['inst'] || fullInfo['vk'] ?
+                    <div className='cafeCard--content--flex'>
 
-                <div className='cafeCard--content--flex'>
+                        {fullInfo['Сайты'] ?
+                            <a className='cafeCard--content--website'
+                               href={addHttp(fullInfo['Сайты'].match(/.+?(?=\||$)/))}
+                               target='_blank'>
+                                Перейти на сайт
+                            </a>
+                            : null
+                        }
 
-                    {fullInfo['Сайты'] ?
-                        <a className='cafeCard--content--website'
-                            href={addHttp(fullInfo['Сайты'].match(/.+?(?=\||$)/))}
-                            target='_blank'>
-                            Перейти на сайт
-                         </a>
-                        :null
-                    }
+                        {fullInfo['inst'] ?
+                            <a className='cafeCard--content--insta'
+                               href={addHttp(fullInfo['inst'])}
+                               target='_blank'>
+                                <img alt='Go to Instagram' src={instBtn} width='14' height='15'/>
+                            </a>
+                            : null
+                        }
 
-                    {fullInfo['inst'] ?
-                        <a className='cafeCard--content--insta'
-                           href={addHttp(fullInfo['inst'])}
-                           target='_blank'>
-                            <img alt='Go to Instagram' src={instBtn} width='14' height='15' />
-                        </a>
-                        :null
-                    }
+                        {fullInfo['vk'] ?
+                            <a className='cafeCard--content--insta'
+                               href={addHttp(fullInfo['vk'])}
+                               target='_blank'>
+                                <img alt='Go to VK' src={vkBtn} width='18' height='10'/>
+                            </a>
+                            : null
+                        }
 
-                    {fullInfo['vk'] ?
-                        <a className='cafeCard--content--insta'
-                           href={addHttp(fullInfo['vk'])}
-                           target='_blank'>
-                            <img alt='Go to VK' src={vkBtn} width='18' height='10' />
-                        </a>
-                        :null
-                    }
-
-                </div>
-
-                {fullInfo['remote'] ?
-                    <div className='cafeCard--content--remote'>
-                        {fullInfo['remote']}
                     </div>
                     : null
                 }
 
+                {fullInfo['remote'] || fullInfo['Способ оплаты']=='Наличный расчёт' ?
+                    <div className='cafeCard--content--remote'>
+                        {fullInfo['remote'] ?
+                            <div>{fullInfo['remote']}</div>
+                            : null
+                        }
+                        {fullInfo['Способ оплаты']=='Наличный расчёт' ?
+                            <div>Оплата только наличными</div>
+                            : null
+                        }
+                    </div>
+                :null}
 
-                {fullInfo['Способ оплаты']=='Наличный расчёт' ?
-                    <div>Оплата только наличными</div>
-                    : null
-                }
+
+
 
 
             </div>,

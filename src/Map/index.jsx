@@ -178,7 +178,7 @@ function makeGeoJSON(data) {
                 rating: rating,
                 color: (rating) ? getColorMagma(rating) : 'gray',
                 workTime: parseWorkTime(d['Время работы']),
-                eco: d['eco_info'] ? 1 : 0,
+                eco: d['eco_info'] ? d['eco_info'] : 0,
             }
         }
         }

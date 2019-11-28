@@ -4,7 +4,9 @@ import img from './img/eco.png'
 class Eco extends Component {
     render() {
         return (
-            <span style={{'whiteSpace': 'nowrap'}}>&nbsp;<img src={img} width='17px' height='17px' alt='eco'
+            <span style={{'whiteSpace': 'nowrap'}}>&nbsp;<img src={img} width='17px' height='17px'
+                                                              title={this.props.content ? this.props.content : 'eco'}
+                                                              alt='eco'
                                                               style={{
                                                                   'verticalAlign': '-3px',
                                                                   'height': '1em',
