@@ -87,7 +87,7 @@ class CafeCard extends Component {
 
                     {fullInfo['Сайты'] ?
                         <a className='cafeCard--content--website'
-                            href={addHttp(fullInfo['Сайты'].match(/.+?(?=\||\z)/))}
+                            href={addHttp(fullInfo['Сайты'].match(/.+?(?=\||$)/))}
                             target='_blank'>
                             Перейти на сайт
                          </a>
