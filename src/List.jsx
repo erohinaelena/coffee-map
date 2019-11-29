@@ -38,7 +38,7 @@ class List extends Component {
 
     getLinesByFilters = () => {
         const {rawPoints} = this.props;
-        const searchedText = this.state.searchText.toLowerCase().replace('ё','е');
+        const searchedText = this.state.searchText.toLowerCase().replace(/ё/g,'е');
         const {isEcoChecked, isOpenNowChecked} = this.state;
 
         const today = new Date();

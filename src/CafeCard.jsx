@@ -80,7 +80,7 @@ class CafeCard extends Component {
                 </div>
                 {fullInfo['Телефоны'] ?
                     <div className='cafeCard--content--phones'>
-                        {fullInfo['Телефоны']!="#ERROR!" ? fullInfo['Телефоны'].replace('|',', ') : null}
+                        {fullInfo['Телефоны']!="#ERROR!" ? fullInfo['Телефоны'].replace(/\|/g,', ') : null}
                     </div>
                     : null
                 }
