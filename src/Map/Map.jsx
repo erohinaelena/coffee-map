@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import mapboxgl from 'mapbox-gl';
 import MapboxLanguage from '@mapbox/mapbox-gl-language'
 
-mapboxgl.accessToken = 'pk.eyJ1IjoiZXJvaGluYWVsZW5hIiwiYSI6InNWVFJmZFUifQ.ZjRE101FtM3fXPJiw2Fq9g';
+mapboxgl.accessToken = 'pk.eyJ1IjoibWFpbm9sbWEiLCJhIjoiY2sydTl6b2I1MTJ5YjNjbzM5OW0yZzJiNCJ9.dw7PAO_N-lz7WEjppx1v1w';
 
 class Map extends Component {
     componentDidMount() {
@@ -12,6 +12,7 @@ class Map extends Component {
         ];
         this.map = new mapboxgl.Map({
             container: 'map',
+            //style: 'mapbox://styles/mainolma/ck3k1p5hn1dcb1dmz8ondz21n',  // This is STYLE with CUPS font
             style: 'mapbox://styles/mapbox/light-v9',
             center: [37.623597, 55.751583],
             minZoom: 9,
@@ -103,7 +104,6 @@ class Map extends Component {
         }
         const geojsonPoints = this.props.pointsData;
 
-            // Add the data to your map as a layer
             this.map.addLayer({
                 id: 'locations',
                 type: 'circle',
@@ -123,6 +123,29 @@ class Map extends Component {
                     'circle-stroke-opacity': 1,
                 },
             });
+        /*this.map.addLayer({        // This is CUPS
+            id: 'locations',
+            type: 'symbol',
+            source: geojsonPoints,
+            layout: {
+                'text-field': 'a',
+                'text-font': ['untitled-font-1 font-1'],
+                'text-anchor': 'top',
+                'text-size': 20,
+                'text-allow-overlap': true,
+                'text-ignore-placement' :true,
+                'symbol-sort-key':['get','rating'],
+                'text-offset': [0, -0.2],
+            },
+            paint: {
+                'text-translate-anchor': 'viewport',
+                'text-color':['get','color'],
+                'text-opacity': {
+                    'base': 3,
+                    'stops': [[10, 0.3], [12, 1]]
+                },
+            }
+        });*/
             this.map.addLayer({
                 id: 'locations-text',
                 type: 'symbol',

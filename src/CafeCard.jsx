@@ -80,7 +80,7 @@ class CafeCard extends Component {
                 </div>
                 {fullInfo['Телефоны'] ?
                     <div className='cafeCard--content--phones'>
-                        {fullInfo['Телефоны']!="#ERROR!" ? fullInfo['Телефоны'] : null}
+                        {fullInfo['Телефоны']!="#ERROR!" ? fullInfo['Телефоны'].replace('|',', ') : null}
                     </div>
                     : null
                 }
@@ -105,9 +105,9 @@ class CafeCard extends Component {
                             : null
                         }
 
-                        {fullInfo['vk'] ?
+                        {fullInfo['vklink'] ?
                             <a className='cafeCard--content--insta'
-                               href={addHttp(fullInfo['vk'])}
+                               href={addHttp(fullInfo['vklink'])}
                                target='_blank'>
                                 <img alt='Go to VK' src={vkBtn} width='18' height='10'/>
                             </a>
