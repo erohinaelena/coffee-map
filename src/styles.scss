@@ -16,7 +16,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-    background-color: #020108;;
+    background-color: #020108;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -220,6 +220,8 @@ body {
             margin-top: 12px;
             padding-right: 18px;
             line-height:19px;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(2, 1, 7,0.2) var(--bg-color);
         }
     }
 }
@@ -253,6 +255,8 @@ canvas#legend{
         overflow-y: scroll;
         padding-left: 8px;
         margin: 10px 0 0;
+        scrollbar-width: thin;
+        scrollbar-color: #3b383a #020108;
     }
 }
 
