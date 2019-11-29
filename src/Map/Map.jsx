@@ -26,10 +26,14 @@ class Map extends Component {
         this.props.updateBounds(this.map.getBounds());
         this.initialized = false;
         this.initMap();
-        const markerEl = document.createElement('div');
-        markerEl.className = 'marker';
+        const markerEl = document.createElement('i');
+        markerEl.className = 'fa fa-coffee marker';
 
-        this.theMarker = new mapboxgl.Marker(markerEl);
+        this.theMarker = new mapboxgl.Marker(markerEl,
+            {
+                offset: [0, 0]
+            }
+            );
     }
 
     componentDidUpdate(prevProps) {
@@ -57,6 +61,7 @@ class Map extends Component {
 
 
         let theMarker = this.theMarker
+        if (this.props.activePoint) theMarker.getElement().style.setProperty('color', this.props.activePoint.properties.color);
         if (prevProps.activePoint !== this.props.activePoint){
 
             if (prevProps.activePoint && this.props.activePoint) {

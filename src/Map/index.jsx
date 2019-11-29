@@ -116,6 +116,7 @@ class MapContainer extends Component {
                       isZoomed={this.state.zoomValue > MIN_ZOOM}
                       isCardClosed = {this.state.isCardClosed}
                       activeItem = {this.state.currentItem}
+                      highlightedItem = {this.state.highlightedItemId}
                 />
 
                 <Map pointsData={this.state.points}

@@ -10,7 +10,7 @@ class ListItem extends Component {
             '--border-color':`${item.properties.color}`
         };
         return (
-            <li className={(this.props.activeItem==item.properties.id && !this.props.isCardClosed) ? 'active listItem cafeCard' : 'listItem cafeCard'}
+            <li className={(this.props.activeItem==item.properties.id || this.props.highlightedItem==item.properties.id) ? 'active listItem cafeCard' : 'listItem cafeCard'}
                 id={`cafeListItem_${item.properties.id}`}
                 style = {style}
                 onClick = {this.props.onClick}

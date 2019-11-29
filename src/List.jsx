@@ -14,7 +14,8 @@ class List extends Component {
         linesByFilters: null,
         linesByMap: null,
         linesOfList: [],
-        activeItem: null
+        activeItem: null,
+        highlightedItem: null,
     };
 
     componentDidUpdate(prevProps) {
@@ -227,6 +228,7 @@ class List extends Component {
                                         content={number}
                                         key={i}
                                         activeItem={  (this.props.activeItem ? this.props.activeItem.properties.id : null) || this.state.activeItem}
+                                        highlightedItem = {this.props.highlightedItem}
                                         isCardClosed = {(this.props.activeItem ? false : true) && this.props.isCardClosed}
                                         onClick={this.handleClick.bind(this, number)}
                                         onMouseOver={this.handleMouseOver.bind(this, number)}
