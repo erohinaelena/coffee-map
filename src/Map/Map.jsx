@@ -19,6 +19,7 @@ class Map extends Component {
             maxBounds: bounds,
             //doubleClickZoom: false,
         });
+        this.map.addControl(new mapboxgl.NavigationControl({showZoom: true, showCompass: false}));
         this.translateMap();
         this.zoomThreshold = 11;
         this.props.updateBounds(this.map.getBounds());
