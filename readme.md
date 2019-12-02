@@ -1,5 +1,14 @@
-# npm install
-# npm run start
+# Commands
+
+```
+npm install
+```
+```
+npm run start
+```
+```
+npm run deploy
+```
 
 #### для справки. зависимости:
 npm install --save react
