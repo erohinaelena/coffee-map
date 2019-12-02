@@ -26,12 +26,17 @@ class Map extends Component {
         this.props.updateBounds(this.map.getBounds());
         this.initialized = false;
         this.initMap();
-        const markerEl = document.createElement('i');
-        markerEl.className = 'fa fa-coffee marker';
+        //const markerEl = document.createElement('i');
+        //markerEl.className = 'fa fa-coffee marker';
+				const markerEl = document.createElement("div");
+			markerEl.innerHTML = "<i class='fa fa-coffee marker'></i><div class='ray ray1'></div><div class='ray ray2'></div><div class='ray ray3'></div><div class='ray ray4'></div><div class='ray ray5'></div><div class='ray ray6'></div><div class='ray ray7'></div><div class='ray ray8'></div>";
+        markerEl.className = 'cafe-active';
+			
 
         this.theMarker = new mapboxgl.Marker(markerEl,
             {
-                offset: [0, 0]
+                offset: [0, 0],
+							  anchor: "center"
             }
             );
     }
