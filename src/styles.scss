@@ -471,23 +471,47 @@ canvas#legend{
 			width: 10px;
 		}
 	}
-	.ray1{transform: rotate(0deg);}
-	.ray2{transform: rotate(45deg);}
-	.ray3{transform: rotate(90deg);}
-	.ray4{transform: rotate(135deg);}
-	.ray5{transform: rotate(180deg);}
-	.ray6{transform: rotate(225deg);}
-	.ray7{transform: rotate(270deg);}
-	.ray8{transform: rotate(315deg);}
+	.ray1{animation-name: ray1;}
+	.ray2{animation-name: ray2;}
+	.ray3{animation-name: ray3;}
+	.ray4{animation-name: ray4;}
+	.ray5{animation-name: ray5;}
+	.ray6{animation-name: ray6;}
+	.ray7{animation-name: ray7;}
+	.ray8{animation-name: ray8;}
 }
 
-@keyframes ray {
-  0%   {
-		width: 50px;
-    left: -10px;
-	}
-  100% {
-		width: 60px;
-    left: -15px;
-	}
+$ray-pos-from: -8px;
+$ray-pos-to: -3px;
+@keyframes ray1{
+  0%{transform: rotate(0deg) translateX($ray-pos-from);}
+  100%{transform: rotate(0deg) translateX($ray-pos-to);}
+}
+@keyframes ray2{
+  0%{transform: rotate(45deg) translateX($ray-pos-from);}
+  100%{transform: rotate(45deg) translateX($ray-pos-to);}
+}
+@keyframes ray3{
+  0%{transform: rotate(90deg) translateX($ray-pos-from);}
+  100%{transform: rotate(90deg) translateX($ray-pos-to);}
+}
+@keyframes ray4{
+  0%{transform: rotate(135deg) translateX($ray-pos-from);}
+  100%{transform: rotate(135deg) translateX($ray-pos-to);}
+}
+@keyframes ray5{
+  0%{transform: rotate(180deg) translateX($ray-pos-from);}
+  100%{transform: rotate(180deg) translateX($ray-pos-to);}
+}
+@keyframes ray6{
+  0%{transform: rotate(225deg) translateX($ray-pos-from);}
+  100%{transform: rotate(225deg) translateX($ray-pos-to);}
+}
+@keyframes ray7{
+  0%{transform: rotate(270deg) translateX($ray-pos-from);}
+  100%{transform: rotate(270deg) translateX($ray-pos-to);}
+}
+@keyframes ray8{
+  0%{transform: rotate(315deg) translateX($ray-pos-from);}
+  100%{transform: rotate(315deg) translateX($ray-pos-to);}
 }
