@@ -74,7 +74,7 @@ class ConnectingLineLayer extends Component {
 			<svg className="connectingLineLayerSvg">
 				<line
 					stroke={color}
-					strokeWidth="1"
+					strokeWidth="1.5"
 					x1={x1}
 					y1={y1}
 					x2={x2}
