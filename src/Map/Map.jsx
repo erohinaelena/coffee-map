@@ -31,7 +31,7 @@ class Map extends Component {
 				const markerEl = document.createElement("div");
 			markerEl.innerHTML = "<i class='fa fa-coffee marker'></i><div class='ray ray1'></div><div class='ray ray2'></div><div class='ray ray3'></div><div class='ray ray4'></div><div class='ray ray5'></div><div class='ray ray6'></div><div class='ray ray7'></div><div class='ray ray8'></div>";
         markerEl.className = 'cafe-active';
-			
+
 
         this.theMarker = new mapboxgl.Marker(markerEl,
             {
@@ -65,19 +65,24 @@ class Map extends Component {
         }
 
 
-        let theMarker = this.theMarker
+        let theMarker = this.theMarker;
         if (this.props.activePoint) theMarker.getElement().style.setProperty('color', this.props.activePoint.properties.color);
-        if (prevProps.activePoint !== this.props.activePoint){
-
-            if (prevProps.activePoint && this.props.activePoint) {
-                theMarker.remove()
-                theMarker.setLngLat(this.props.activePoint.geometry.coordinates)
+        if (
+            prevProps.activePoint !== this.props.activePoint ||
+            prevProps.filteredItemsList !== this.props.filteredItemsList
+        ){
+            const newActivePoint = this.props.activePoint && this.props.filteredItemsList.find(
+                ({properties}) => properties.id === this.props.activePoint.properties.id
+            );
+            if (prevProps.activePoint && newActivePoint) {
+                theMarker.remove();
+                theMarker.setLngLat(newActivePoint.geometry.coordinates);
                 theMarker.addTo(this.map)
             }
             else if (prevProps.activePoint)
-                theMarker.remove()
-            else
-                theMarker.setLngLat(this.props.activePoint.geometry.coordinates).addTo(this.map)
+                theMarker.remove();
+            else if (newActivePoint)
+                theMarker.setLngLat(newActivePoint.geometry.coordinates).addTo(this.map)
         }
 
         if (

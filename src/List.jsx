@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom';
 import Search from './Filters/Search.jsx'
 import FilterEcoFriendly from './Filters/FilterEcoFriendly.jsx'
 import FilterOpenNow from './Filters/FilterOpenNow.jsx'
-import lodash from 'lodash';
 import ListItem from './ListItem'
+import ResetFiltersPopup from './ResetFiltersPopup';
+import lodash from 'lodash';
 
 class List extends Component {
     state = {
@@ -171,7 +172,7 @@ class List extends Component {
 
     toggleHover = () =>{
         this.setState({hover: !this.state.hover})
-    }
+    };
 
 
     render() {
@@ -191,22 +192,15 @@ class List extends Component {
         return ReactDOM.createPortal(
             <div className={'sidebar'}>
                 {needResetFilters && (
-                    <div className={'resetPopupContainer'}>
-                        <div className={'resetPopup'}>
-                            <div className={'resetPopup_title'}>{'Ничего не нашлось'}</div>
-                            {`В этом месте нет ${isEcoChecked ? 'эко-кафе' : 'кафе'}${isEcoChecked && searchText.length > 0 ? ',' : ''}${searchText.length > 0 ? ` c "${searchText}" в названии или адресе.` : '.'}`}
-                            {isOpenNowChecked ? ' По крайней мере таких, которые открыты прямо сейчас.' : '' }
-                            <br/>
-                            <br/>
-                            {'Попробуйте '}
-                            {isZoomed && (<button onClick={this.props.resetZoomValue}>{'искать по всей Москве'}</button>)}
-                            {isZoomed && filtersToggled ? ' или ' : ''}
-                            {filtersToggled && (<button onClick={this.resetFilters}>{'сбросить фильтры'}</button>)}
-                        </div>
-                    </div>
-                )}
+                    <ResetFiltersPopup
+                        isEcoChecked={isEcoChecked}
+                        searchText={searchText}
+                        isOpenNowChecked={isOpenNowChecked}
+                        isZoomed={isZoomed}
+                        resetZoomValue={this.props.resetZoomValue}
+                        resetFilters={this.resetFilters}
+                    />)}
                     <div className={'sidebar'}>
-
                         <div className={'filters'}>
                             <Search
                                 onSearchTextChange={this.onSearchTextChange}
